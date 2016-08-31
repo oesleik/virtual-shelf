@@ -4,9 +4,11 @@ app.elements.VirtualShelf = class extends app.elements.HTMLCustomElement {
 
 	init() {
 		this.innerHTML =
-			'<div style="text-align: center; margin: 100px 0 30px;">' +
-	            '<img src="img/logo-splash.png" />' +
-	        '</div>';
+			// '<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">' +
+			// 	// '<app-header></app-header>' +
+			// 	// '<app-drawer></app-drawer>' +
+			// 	// '<app-content></app-content>' +
+			// '</div>';
 	}
 
 }
