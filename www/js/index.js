@@ -2,7 +2,6 @@ var app = {
 
     production: false,
 
-
     initialize: function() {
         this.bindEvents();
     },
@@ -11,7 +10,7 @@ var app = {
         document.addEventListener('deviceready', this.onDeviceReady, false);
 
         if (!this.production) {
-            this.onDeviceReady();
+            setTimeout(this.onDeviceReady, 0);
         }
     },
 
