@@ -12,6 +12,7 @@ app.elements.AppHeader = class extends app.elements.HTMLCustomElement {
 			'<div class="mdl-layout__tab-bar mdl-js-ripple-effect">' +
 				'<a href="#scroll-tab-1" class="mdl-layout__tab is-active">Meus livros</a>' +
 				'<a href="#scroll-tab-2" class="mdl-layout__tab">Meus interesses</a>' +
+				'<a href="#scroll-tab-3" class="mdl-layout__tab">Alguma outra tab</a>' +
 			'</div>');
 	}
 

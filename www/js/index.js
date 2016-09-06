@@ -15,7 +15,7 @@ var app = {
     },
 
     onDeviceReady: function() {
-        OAuth.initialize('ldh8aAt-ZnZprccwh7ZdtAGTJQw');
+        // OAuth.initialize('ldh8aAt-ZnZprccwh7ZdtAGTJQw');
     },
 
     authenticate: function() {
