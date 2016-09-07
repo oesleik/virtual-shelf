@@ -1,11 +1,14 @@
 <?php
-
 error_reporting(E_ALL);
 ini_set("display_errors", true);
 
-require '../../../vendor/autoload.php';
-require 'autoload.php';
+require 'config.default.php';
 
-define('DEBUG', true);
+if (Config::$debug) {
+	error_reporting(E_ALL);
+	ini_set("display_errors", true);
+}
 
-require 'connection.php';
+require Config::$root . 'vendor/autoload.php';
+require Config::$rootApi . 'autoload.php';
+require Config::$rootApi . 'connection.php';
