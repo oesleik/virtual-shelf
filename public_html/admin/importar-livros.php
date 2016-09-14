@@ -17,9 +17,24 @@ $client->setApplicationName(Config::$googleAppName);
 $client->setDeveloperKey(Config::$googleApiKey);
 
 $service = new Google_Service_Books($client);
-$optParams = array('filter' => 'free-ebooks');
-$results = $service->volumes->listVolumes('Henry David Thoreau', $optParams);
+// $results = $service->volumes->listVolumes("oeslei");
+// $results = $service->volumes->get("I9M8AAAAcAAJ");
 
-foreach ($results as $item) {
-	echo $item['volumeInfo']['title'], "<br /> \n";
-}
+// foreach ($results as $item) {
+// 	var_dump($item);
+// }
+
+// var_dump($results);
+
+// titulo
+// subtítulo
+// autores
+// dataPublicacao
+// paginas
+// imagens
+// lingua
+
+
+// genero?
+
+// infoLink
