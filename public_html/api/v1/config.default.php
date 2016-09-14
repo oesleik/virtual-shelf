@@ -2,19 +2,28 @@
 
 final class Config {
 
+	static $production;
 	static $debug;
 	static $root;
 	static $rootApi;
 
-	static $googleApiKey;
 	static $googleAppName;
+	static $googleApiKey;
+
+	static $proxy;
+	static $proxyAuth;
 
 	public function __construct() {
-		self::$debug = true;
+		self::$production = true;
+		self::$debug = false;
 		self::$root = realpath(__DIR__ . '/../../../') . '/';
 		self::$rootApi = self::$root . 'public_html/api/v1/';
 
+		self::$googleAppName = '';
 		self::$googleApiKey = '';
+
+		self::$proxy = false;
+		self::$proxyAuth = false;
 
 		$this->loadUserConfig();
 	}
