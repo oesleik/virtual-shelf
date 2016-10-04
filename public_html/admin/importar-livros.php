@@ -1,20 +1,20 @@
 <?php
 
-require '../api/v1/config.php';
+require "../api/v1/config.php";
 
 $client = new Google_Client();
 
-if (Config::$proxy) {
+if (Config::get("proxy")) {
 	$httpClient = new GuzzleHttp\Client([
-		'proxy' => (Config::$proxyAuth ? Config::$proxyAuth . '@' : '') . Config::$proxy,
-		'verify' => Config::$production
+		"proxy" => (Config::get("proxyAuth") ? Config::get("proxyAuth") . "@" : "") . Config::get("proxy"),
+		"verify" => Config::get("production")
 	]);
 
 	$client->setHttpClient($httpClient);
 }
 
-$client->setApplicationName(Config::$googleAppName);
-$client->setDeveloperKey(Config::$googleApiKey);
+$client->setApplicationName(Config::get("googleAppName"));
+$client->setDeveloperKey(Config::get("googleApiKey"));
 
 $service = new Google_Service_Books($client);
 

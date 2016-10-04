@@ -1,11 +1,10 @@
 <?php
-
 use \Illuminate\Container\Container;
 use \Illuminate\Database\ConnectionResolver;
 use \Illuminate\Database\Connectors\ConnectionFactory;
 use \Illuminate\Database\Eloquent\Model;
 
-startConnection(require 'database.php');
+startConnection(require Config::get("root") . "database.php");
 
 function startConnection($settings) {
 	$container = new Container();
@@ -14,8 +13,8 @@ function startConnection($settings) {
 	$connection = $factory->make($settings);
 
 	$resolver = new ConnectionResolver();
-	$resolver->addConnection('default', $connection);
-	$resolver->setDefaultConnection('default');
+	$resolver->addConnection("default", $connection);
+	$resolver->setDefaultConnection("default");
 
 	Model::setConnectionResolver($resolver);
 }
