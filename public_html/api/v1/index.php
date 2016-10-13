@@ -1,13 +1,15 @@
 <?php
 
-require 'config.php';
+require "../../../config.php";
 
 $config = [
-	'settings' => [ 'displayErrorDetails' => DEBUG ]
+	"settings" => [ "displayErrorDetails" => Config::get("debug") ]
 ];
 
 $app = new \Slim\App($config);
 
-$app->get('/usuarios/{id}', '\Services\Usuarios:get');
+// Usuarios
+$app->get("/usuarios", "Services\Usuarios:getAll");
+$app->get("/usuarios/{id}", "Services\Usuarios:get");
 
 $app->run();

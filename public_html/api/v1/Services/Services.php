@@ -2,9 +2,23 @@
 
 namespace Services;
 
-class Services {
+abstract class Services {
 
-	const STATUS_OK = 200;
-	const STATUS_ERROR = 500;
+	const SUCCESS = 200;
+	const ERROR = 500;
+
+	protected function parseResponse($res, $response, $status = self::SUCCESS) {
+		$result = [];
+
+		if ($status == self::ERROR) {
+			$result["error"] = $response;
+			$result["status"] = self::ERROR;
+		} else {
+			$result["message"] = $response;
+			$result["status"] = self::SUCCESS;
+		}
+
+		return $res->withJson($result, $result["status"]);
+	}
 
 }
