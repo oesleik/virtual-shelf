@@ -23,4 +23,9 @@ $app->get("/logins", "Services\Logins:getAll");
 $app->get("/logins/{id}", "Services\Logins:get");
 $app->post("/logins", "Services\Logins:add");
 
+
+// Perfil social
+$app->get("/perfil_socials", "Services\Perfil_socials:getAll");
+$app->get("/perfil_socials/{id}", "Services\Perfil_socials:get");
+$app->post("/perfil_socials", "Services\Perfil_socials:add");
 $app->run();
