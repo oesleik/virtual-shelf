@@ -23,18 +23,25 @@ class Usuarios extends Services {
 	}
 
 	public function add($req, $res) {
-		$dados = $req->getBody();
-		return $this->parseResponse($res, $dados);
-
-		// $usuario = Usuario::create($dados);
+		$dados = $req->getParsedBody();
+		$usuario = Usuario::create($dados);
+		return $this->parseResponse($res, $usuario);
 	}
 
 	public function edit($req, $res) {
+		$id = $req->getAttribute("id");
+		$dados = $req->getParsedBody();
 
+		Usuario::where("id", $id)->update($dados);
+		$usuario = Usuario::find($id);
+
+		return $this->parseResponse($res, $usuario);
 	}
 
 	public function delete($req, $res) {
-
+		$id = $req->getAttribute("id");
+		$deleted = (bool) Usuario::destroy($id);
+		return $this->parseResponse($res, $deleted);
 	}
 
 }

@@ -12,6 +12,8 @@ $app = new \Slim\App($config);
 $app->get("/usuarios", "Services\Usuarios:getAll");
 $app->get("/usuarios/{id}", "Services\Usuarios:get");
 $app->post("/usuarios", "Services\Usuarios:add");
+$app->put("/usuarios/{id}", "Services\Usuarios:edit");
+$app->delete("/usuarios/{id}", "Services\Usuarios:delete");
 
 // Volume
 $app->get("/volumes", "Services\Volumes:getAll");
