@@ -18,4 +18,9 @@ $app->get("/volumes", "Services\Volumes:getAll");
 $app->get("/volumes/{id}", "Services\Volumes:get");
 $app->post("/volumes", "Services\Volumes:add");
 
+// Login
+$app->get("/logins", "Services\Logins:getAll");
+$app->get("/logins/{id}", "Services\Logins:get");
+$app->post("/logins", "Services\Logins:add");
+
 $app->run();
