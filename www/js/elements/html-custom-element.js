@@ -1,7 +1,5 @@
 'use strict';
 
-app.elements = {};
-
 app.elements.HTMLCustomElement = class extends HTMLElement {
 
 	constructor(self) {

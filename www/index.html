@@ -13,20 +13,28 @@
         <title>Virtual Shelf</title>
     </head>
     <body>
-        <virtual-shelf></virtual-shelf>
+        <app-router mode="hash" init="manual">
+            <app-route path="/home" element="page-home"></app-route>
+            <app-route path="/login" element="page-login"></app-route>
+            <app-route path="*" redirect="/home"></app-route>
+        </app-router>
 
         <script src="cordova.js"></script>
         <script src="js/document-register-element.js"></script>
         <script src="js/innerHTML.js"></script>
         <script src="js/material.min.js"></script>
         <script src="js/oauth.min.js"></script>
+        <script src="js/app-router.js"></script>
 
         <script src="js/index.js"></script>
+        <script src="js/elements/html-custom-element.js"></script>
 
-        <script src="js/custom-elements/html-custom-element.js"></script>
-        <script src="js/custom-elements/virtual-shelf.js"></script>
+        <script src="js/elements/pages/home.js"></script>
+        <script src="js/elements/pages/login.js"></script>
+
+        <!-- <script src="js/custom-elements/virtual-shelf.js"></script>
         <script src="js/custom-elements/app-header.js"></script>
         <script src="js/custom-elements/app-drawer.js"></script>
-        <script src="js/custom-elements/app-content.js"></script>
+        <script src="js/custom-elements/app-content.js"></script> -->
     </body>
 </html>

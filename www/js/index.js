@@ -1,6 +1,11 @@
 var app = {
 
+    elements: {},
+    pages: {},
+
     production: false,
+    router: null,
+
 
     initialize: function() {
         this.bindEvents();
@@ -15,6 +20,9 @@ var app = {
     },
 
     onDeviceReady: function() {
+        router = document.querySelector("app-router");
+        router.init();
+        router.go("home");
         // OAuth.initialize('ldh8aAt-ZnZprccwh7ZdtAGTJQw');
     },
 
