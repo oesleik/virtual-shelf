@@ -6,28 +6,30 @@ var app = {
     production: false,
     router: null,
 
-
-    initialize: function() {
+    initialize() {
         this.bindEvents();
     },
 
-    bindEvents: function() {
-        document.addEventListener('deviceready', this.onDeviceReady, false);
+    bindEvents() {
+        document.addEventListener("deviceready", this.onDeviceReady.bind(this), false);
 
         if (!this.production) {
-            setTimeout(this.onDeviceReady, 0);
+            document.dispatchEvent(new Event("deviceready"));
         }
     },
 
-    onDeviceReady: function() {
-        router = document.querySelector("app-router");
+    onDeviceReady() {
+        var router = document.querySelector("app-router");
         router.init();
-        router.go("home");
-        // OAuth.initialize('ldh8aAt-ZnZprccwh7ZdtAGTJQw');
+        this.goTo("home");
     },
 
-    authenticate: function() {
-        OAuth.popup('google')
+    goTo(path) {
+        window.location.href = "#/" + path;
+    },
+
+    authenticate() {
+        OAuth.popup("google")
             .then(function(result) {
                 console.info(result);
 
@@ -39,23 +41,25 @@ var app = {
                 console.error(error);
             });
 
+        // OAuth.initialize("ldh8aAt-ZnZprccwh7ZdtAGTJQw");
+
         /*
-        access_token: 'jsdkfjk',
+        access_token: "jsdkfjk",
         expires_in: 3600,
-        id_token: 'jfkdsjfk',
-        provider: 'google',
-        token_type: 'Bearer'
+        id_token: "jfkdsjfk",
+        provider: "google",
+        token_type: "Bearer"
         */
 
         /*
-        avatar: 'https://jksdjfkd',
-        email: 'fjsdkfj@jfkd',
-        firstname: 'jfkds',
+        avatar: "https://jksdjfkd",
+        email: "fjsdkfj@jfkd",
+        firstname: "jfkds",
         gender: 1,
         id: 234235423423,
-        lastname: 'jkjk',
-        name: 'jkjfdksfj sdjfkjsd',
-        url: 'https:/jskdf'
+        lastname: "jkjk",
+        name: "jkjfdksfj sdjfkjsd",
+        url: "https:/jskdf"
         */
     },
 

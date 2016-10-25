@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 app.elements.HTMLCustomElement = class extends HTMLElement {
 
