@@ -4,7 +4,7 @@ app.pages.PageHome = class extends app.elements.HTMLCustomElement {
 
 	init() {
 		innerHTML(this,
-			`Hellow world! <a href="#/login">testar</a>`
+			`<br /><a href="#/login" style="margin: 15px;">Página de login</a>`
 		);
 	}
 
