@@ -30,11 +30,19 @@ class Logins extends Services {
 	}
 
 	public function edit($req, $res) {
+		$id = $req->getAttribute("id");
+		$dados = $req->getParsedBody();
 
+		Login::where("id", $id)->update($dados);
+		$perfil_social = Login::find($id);
+
+		return $this->parseResponse($res, $login)
 	}
 
 	public function delete($req, $res) {
-
+		$id = $req->getAttribute("id");
+		$deleted = (bool) Login::destroy($id);
+		return $this->parseResponse($res, $deleted);
 	}
 
 }
