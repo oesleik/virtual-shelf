@@ -25,16 +25,22 @@ class Perfil_socials extends Services {
 	public function add($req, $res) {
 		$dados = $req->getBody();
 		return $this->parseResponse($res, $dados);
-
-		
 	}
 
 	public function edit($req, $res) {
+		$id = $req->getAttribute("id");
+		$dados = $req->getParsedBody();
 
+		Perfil_social::where("id", $id)->update($dados);
+		$perfil_social = Volume::find($id);
+
+		return $this->parseResponse($res, $perfil_social);
 	}
 
 	public function delete($req, $res) {
-
+		$id = $req->getAttribute("id");
+		$deleted = (bool) Perfil_social::destroy($id);
+		return $this->parseResponse($res, $deleted);
 	}
 
 }
