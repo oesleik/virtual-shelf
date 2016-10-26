@@ -11,7 +11,7 @@
 
 		init() {}
 
-	}
+	};
 
 	elements.HTMLButtonElement = class extends HTMLButtonElement {
 
@@ -23,6 +23,6 @@
 
 		init() {}
 
-	}
+	};
 
 })( window.elements = {} );

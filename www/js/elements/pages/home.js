@@ -9,7 +9,7 @@
 			);
 		}
 
-	}
+	};
 
 	customElements.define("page-home", pages.PageHome);
 

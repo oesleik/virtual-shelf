@@ -22,6 +22,8 @@
 				</div>`
 			);
 
+			this.querySelector("button").addEventListener("click", this.efetuarLogin.bind(this, "google"), false);
+
 			this.refStyle = restyle({
 				"page-login": {
 					"position": "absolute",
@@ -66,7 +68,30 @@
 			this.refStyle.remove();
 		}
 
-	}
+		efetuarLogin(provider) {
+			OAuth.initialize("ldh8aAt-ZnZprccwh7ZdtAGTJQw");
+
+			OAuth.popup(provider)
+			    .then(function(result) {
+			        console.info(result);
+
+			        result.me()
+			            .then(function(result) {
+			                console.log(result);
+
+			                api.get("/perfis-sociais/" + provider + "/" + result.id)
+			                	.then(function() {
+			                		console.log("Usuário encontrado");
+			                	}, function() {
+			                		console.warn("Usuário não encontrado");
+			                	});
+			            });
+			    }, function(error) {
+			        console.warn(error);
+			    });
+		}
+
+	};
 
 	customElements.define("page-login", pages.PageLogin);
 

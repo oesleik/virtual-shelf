@@ -11,6 +11,6 @@
 
 		init() {}
 
-	}
+	};
 
 })( window.pages = {} );

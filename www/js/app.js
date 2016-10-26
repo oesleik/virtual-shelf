@@ -38,8 +38,6 @@ var app = {
                 console.error(error);
             });
 
-        // OAuth.initialize("ldh8aAt-ZnZprccwh7ZdtAGTJQw");
-
         /*
         access_token: "jsdkfjk",
         expires_in: 3600,

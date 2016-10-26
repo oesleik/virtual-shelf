@@ -4,7 +4,7 @@ namespace Models;
 
 use \Illuminate\Database\Eloquent\Model;
 
-class Perfil_social extends Model {
+class PerfilSocial extends Model {
 
 	protected $table = "perfil_social";
 	protected $guarded = [];
