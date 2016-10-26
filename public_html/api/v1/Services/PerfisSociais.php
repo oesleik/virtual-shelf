@@ -46,15 +46,15 @@ class PerfisSociais extends Services {
 		$id = $req->getAttribute("id");
 		$dados = $req->getParsedBody();
 
-		PerfilSocial::where("id", $id)->update($dados);
-		$perfilSocial = Volume::find($id);
+		Perfil_social::where("id", $id)->update($dados);
+		$perfil_social = Perfil_social::find($id);
 
-		return $this->parseResponse($res, $perfilSocial);
+		return $this->parseResponse($res, $perfil_social);
 	}
 
 	public function delete($req, $res) {
 		$id = $req->getAttribute("id");
-		$deleted = (bool) PerfilSocial::destroy($id);
+		$deleted = (bool) Perfil_social::destroy($id);
 		return $this->parseResponse($res, $deleted);
 	}
 
