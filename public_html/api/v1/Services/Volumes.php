@@ -26,15 +26,22 @@ class Volumes extends Services {
 		$dados = $req->getParsedBody();
 		$volume = Volume::create($dados);
 		return $this->parseResponse($res, $volume);
-
 	}
 
 	public function edit($req, $res) {
+		$id = $req->getAttribute("id");
+		$dados = $req->getParsedBody();
 
+		Volume::where("id", $id)->update($dados);
+		$volume = Volume::find($id);
+
+		return $this->parseResponse($res, $volume);
 	}
 
 	public function delete($req, $res) {
-
+		$id = $req->getAttribute("id");
+		$deleted = (bool) Volume::destroy($id);
+		return $this->parseResponse($res, $deleted);
 	}
 
 }
