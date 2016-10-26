@@ -1,8 +1,5 @@
 var app = {
 
-    elements: {},
-    pages: {},
-
     production: false,
     router: null,
 
