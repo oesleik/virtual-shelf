@@ -32,7 +32,7 @@ class Perfil_socials extends Services {
 		$dados = $req->getParsedBody();
 
 		Perfil_social::where("id", $id)->update($dados);
-		$perfil_social = Volume::find($id);
+		$perfil_social = Perfil_social::find($id);
 
 		return $this->parseResponse($res, $perfil_social);
 	}
