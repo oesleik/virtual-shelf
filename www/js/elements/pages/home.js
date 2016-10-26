@@ -3,7 +3,7 @@
 
 	pages.PageHome = class extends pages.PageBlank {
 
-		init() {
+		connectedCallback() {
 			innerHTML(this,
 				`<br /><a href="#/login" style="margin: 15px;">Página de login</a>`
 			);
