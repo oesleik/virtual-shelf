@@ -3,7 +3,7 @@
 
 	pages.PageLogin = class extends pages.PageBlank {
 
-		init() {
+		connectedCallback() {
 			innerHTML(this, `
 				<div class="container-logo">
 					<img src="img/logo-login.png" />
@@ -22,47 +22,51 @@
 				</div>`
 			);
 
+			this.refStyle = restyle({
+				"page-login": {
+					"position": "absolute",
+					"top": 0,
+					"right": 0,
+					"bottom": 0,
+					"left": 0
+				},
+				"page-login .container-logo": {
+					"textAlign": "center",
+					"position": "absolute",
+					"top": ["130px", "calc(50% - 150px)"],
+					"right": 0,
+					"left": 0,
+					"fontSize": "28px",
+					"fontWeight": "bold",
+					"lineHeight": "1.5em",
+					"color": "#333"
+				},
+				"page-login .container-acoes": {
+					"width": "100%",
+					"height": "200px",
+					"textAlign": "center",
+					"position": "absolute",
+					"right": 0,
+					"bottom": 0,
+					"left": 0
+				},
+				"page-login button": {
+					"margin": "5px 0 !important",
+					"width": "100%",
+					"max-width": "180px",
+					"fontWeight": "bold !important",
+					"textTransform": "initial !important"
+				}
+			}, []);
+
 			componentHandler.upgradeElements(this.querySelectorAll("button"));
 		}
 
-	}
-
-	restyle({
-		"page-login": {
-			"position": "absolute",
-			"top": 0,
-			"right": 0,
-			"bottom": 0,
-			"left": 0
-		},
-		"page-login .container-logo": {
-			"textAlign": "center",
-			"position": "absolute",
-			"top": ["130px", "calc(50% - 150px)"],
-			"right": 0,
-			"left": 0,
-			"fontSize": "28px",
-			"fontWeight": "bold",
-			"lineHeight": "1.5em",
-			"color": "#333"
-		},
-		"page-login .container-acoes": {
-			"width": "100%",
-			"height": "200px",
-			"textAlign": "center",
-			"position": "absolute",
-			"right": 0,
-			"bottom": 0,
-			"left": 0
-		},
-		"page-login button": {
-			"margin": "5px 0 !important",
-			"width": "100%",
-			"max-width": "180px",
-			"fontWeight": "bold !important",
-			"textTransform": "initial !important"
+		disconnectedCallback() {
+			this.refStyle.remove();
 		}
-	}, []);
+
+	}
 
 	customElements.define("page-login", pages.PageLogin);
 

@@ -17,8 +17,8 @@ var app = {
 
     onDeviceReady() {
         var router = document.querySelector("app-router");
-        router.init();
         this.goTo("login");
+        router.init();
     },
 
     goTo(path) {
