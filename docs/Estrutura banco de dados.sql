@@ -9,7 +9,6 @@ CREATE TABLE IF NOT EXISTS `autor` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
-
 CREATE TABLE IF NOT EXISTS `categoria` (
   `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `nome` VARCHAR(60) NOT NULL,
@@ -17,6 +16,32 @@ CREATE TABLE IF NOT EXISTS `categoria` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
+CREATE TABLE IF NOT EXISTS `editora` (
+  `id` INT(10) UNSIGNED NOT NULL,
+  `nome` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+CREATE TABLE IF NOT EXISTS `volume` (
+  `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `titulo` VARCHAR(250) NOT NULL,
+  `subtitulo` VARCHAR(250) NOT NULL,
+  `isbn` VARCHAR(14) NULL DEFAULT NULL,
+  `paginas` INT(11) NULL DEFAULT NULL,
+  `linguagem` VARCHAR(60) NULL DEFAULT NULL,
+  `dataPublicacao` DATE NULL DEFAULT NULL,
+  `id_google` VARCHAR(60) NOT NULL,
+  `id_editora` INT(10) UNSIGNED NOT NULL,
+  `volumecol` VARCHAR(45) NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_volume_editora1_idx` (`id_editora` ASC),
+  CONSTRAINT `fk_volume_editora1`
+    FOREIGN KEY (`id_editora`)
+    REFERENCES `editora` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
 
 CREATE TABLE IF NOT EXISTS `usuario` (
   `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -30,36 +55,27 @@ CREATE TABLE IF NOT EXISTS `usuario` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
-
-CREATE TABLE IF NOT EXISTS `volume` (
-  `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `titulo` VARCHAR(250) NOT NULL,
-  `subtitulo` VARCHAR(250) NOT NULL,
-  `isbn` VARCHAR(14) NULL DEFAULT NULL,
-  `paginas` INT(11) NULL DEFAULT NULL,
-  `linguagem` VARCHAR(60) NULL DEFAULT NULL,
-  `dataPublicacao` DATE NULL DEFAULT NULL,
-  `id_google` VARCHAR(60) NOT NULL,
-  PRIMARY KEY (`id`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
-
-
 CREATE TABLE IF NOT EXISTS `volume_comentario` (
   `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `id_volume` INT(10) UNSIGNED NOT NULL,
   `comentario` TEXT NOT NULL,
   `id_comentario` INT(10) UNSIGNED NULL DEFAULT NULL,
+  `id_usuario` INT(10) UNSIGNED NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_id_volume_idx` (`id_volume` ASC),
+  INDEX `fk_volume_comentario_usuario1_idx` (`id_usuario` ASC),
   CONSTRAINT `fk_id_volume`
     FOREIGN KEY (`id_volume`)
     REFERENCES `volume` (`id`)
     ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_volume_comentario_usuario1`
+    FOREIGN KEY (`id_usuario`)
+    REFERENCES `usuario` (`id`)
+    ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
-
 
 CREATE TABLE IF NOT EXISTS `comentario_aprovacao` (
   `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -69,19 +85,18 @@ CREATE TABLE IF NOT EXISTS `comentario_aprovacao` (
   PRIMARY KEY (`id`),
   INDEX `fk_id_ususario_idx` (`id_usuario` ASC),
   INDEX `fk_id_comentario_idx` (`id_comentario` ASC),
-  CONSTRAINT `fk_id_ususario`
-    FOREIGN KEY (`id_usuario`)
-    REFERENCES `usuario` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
   CONSTRAINT `fk_id_comentario`
     FOREIGN KEY (`id_comentario`)
     REFERENCES `volume_comentario` (`id`)
     ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_id_ususario`
+    FOREIGN KEY (`id_usuario`)
+    REFERENCES `usuario` (`id`)
+    ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
-
 
 CREATE TABLE IF NOT EXISTS `comentario_moderacao` (
   `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -91,19 +106,18 @@ CREATE TABLE IF NOT EXISTS `comentario_moderacao` (
   PRIMARY KEY (`id`),
   INDEX `fk_id_usuario_idx` (`id_usuario` ASC),
   INDEX `fk_id_comentario_idx` (`id_comentario` ASC),
-  CONSTRAINT `fk_id_usuario`
-    FOREIGN KEY (`id_usuario`)
-    REFERENCES `usuario` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
   CONSTRAINT `fk_id_comentario_mod`
     FOREIGN KEY (`id_comentario`)
     REFERENCES `volume_comentario` (`id`)
     ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_id_usuario`
+    FOREIGN KEY (`id_usuario`)
+    REFERENCES `usuario` (`id`)
+    ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
-
 
 CREATE TABLE IF NOT EXISTS `perfil_social` (
   `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -118,7 +132,6 @@ CREATE TABLE IF NOT EXISTS `perfil_social` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
-
 CREATE TABLE IF NOT EXISTS `login` (
   `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `id_usuario` INT(10) UNSIGNED NOT NULL,
@@ -131,19 +144,18 @@ CREATE TABLE IF NOT EXISTS `login` (
   PRIMARY KEY (`id`),
   INDEX `fk_id_usuario_idx` (`id_usuario` ASC),
   INDEX `fk_id_perfil_social_idx` (`id_perfil_social` ASC),
-  CONSTRAINT `fk_id_usuario_login`
-    FOREIGN KEY (`id_usuario`)
-    REFERENCES `usuario` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
   CONSTRAINT `fk_id_perfil_social`
     FOREIGN KEY (`id_perfil_social`)
     REFERENCES `perfil_social` (`id`)
     ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_id_usuario_login`
+    FOREIGN KEY (`id_usuario`)
+    REFERENCES `usuario` (`id`)
+    ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
-
 
 CREATE TABLE IF NOT EXISTS `prateleira` (
   `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -159,7 +171,6 @@ CREATE TABLE IF NOT EXISTS `prateleira` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
-
 
 CREATE TABLE IF NOT EXISTS `prateleira_volume` (
   `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -181,7 +192,6 @@ CREATE TABLE IF NOT EXISTS `prateleira_volume` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
-
 CREATE TABLE IF NOT EXISTS `volume_autor` (
   `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `id_volume` INT(10) UNSIGNED NOT NULL,
@@ -202,7 +212,6 @@ CREATE TABLE IF NOT EXISTS `volume_autor` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
-
 CREATE TABLE IF NOT EXISTS `volume_categoria` (
   `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `id_volume` INT(10) UNSIGNED NOT NULL,
@@ -210,19 +219,18 @@ CREATE TABLE IF NOT EXISTS `volume_categoria` (
   PRIMARY KEY (`id`),
   INDEX `fk_id_volume_idx` (`id_volume` ASC),
   INDEX `fk_id_categoria_idx` (`id_categoria` ASC),
-  CONSTRAINT `fk_id_volume_cat`
-    FOREIGN KEY (`id_volume`)
-    REFERENCES `volume` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
   CONSTRAINT `fk_id_categoria`
     FOREIGN KEY (`id_categoria`)
     REFERENCES `categoria` (`id`)
     ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_id_volume_cat`
+    FOREIGN KEY (`id_volume`)
+    REFERENCES `volume` (`id`)
+    ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
-
 
 CREATE TABLE IF NOT EXISTS `volume_imagem` (
   `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -238,7 +246,6 @@ CREATE TABLE IF NOT EXISTS `volume_imagem` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
-
 
 CREATE TABLE IF NOT EXISTS `volume_usuario` (
   `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -261,7 +268,6 @@ CREATE TABLE IF NOT EXISTS `volume_usuario` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
-
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
