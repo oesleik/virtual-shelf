@@ -30,7 +30,7 @@ var api = {
 		if (response.ok) {
 			return response.json()
 				.then(function(json) {
-					return json.status == 200 ? json.message : Promise.reject(json.error || "Erro na resposta do servidor");
+					return json.status === 200 ? json.message : Promise.reject(json.error || "Erro na resposta do servidor");
 				});
 		} else {
 			return Promise.reject("Erro ao executar chamada ao servidor");

@@ -25,6 +25,7 @@ var app = {
         window.location.href = "#/" + path;
     },
 
+    /*
     authenticate() {
         OAuth.popup("google")
             .then(function(result) {
@@ -38,7 +39,6 @@ var app = {
                 console.error(error);
             });
 
-        /*
         access_token: "jsdkfjk",
         expires_in: 3600,
         id_token: "jfkdsjfk",
@@ -55,8 +55,8 @@ var app = {
         lastname: "jkjk",
         name: "jkjfdksfj sdjfkjsd",
         url: "https:/jskdf"
-        */
     },
+    */
 
 };
 

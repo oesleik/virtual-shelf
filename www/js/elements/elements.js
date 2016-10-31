@@ -25,4 +25,4 @@
 
 	};
 
-})( window.elements = {} );
+}( window.elements = {} ));

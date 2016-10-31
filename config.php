@@ -20,7 +20,7 @@ final class Config {
 		$filePath = self::get("root") . "config.user.php";
 
 		if (file_exists($filePath)) {
-			$userConfig = require $filePath;
+			require $filePath;
 		}
 	}
 

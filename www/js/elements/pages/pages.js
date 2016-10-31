@@ -13,4 +13,4 @@
 
 	};
 
-})( window.pages = {} );
+}( window.pages = {} ));

@@ -1,4 +1,4 @@
-(function(pages) {
+(function(pages, customElements, innerHTML) {
 	"use strict";
 
 	pages.PageHome = class extends pages.PageBlank {
@@ -13,4 +13,4 @@
 
 	customElements.define("page-home", pages.PageHome);
 
-})( window.pages );
+}( window.pages, window.customElements, window.innerHTML ));

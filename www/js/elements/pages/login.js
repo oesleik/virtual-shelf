@@ -1,4 +1,4 @@
-(function(pages) {
+(function(pages, customElements, innerHTML, restyle, OAuth, api) {
 	"use strict";
 
 	pages.PageLogin = class extends pages.PageBlank {
@@ -72,27 +72,27 @@
 			OAuth.initialize("ldh8aAt-ZnZprccwh7ZdtAGTJQw");
 
 			OAuth.popup(provider)
-			    .then(function(result) {
-			        console.info(result);
+				.then(function(result) {
+					// console.info(result);
 
-			        result.me()
-			            .then(function(result) {
-			                console.log(result);
+					result.me()
+						.then(function(result) {
+							// console.log(result);
 
-			                api.get("/perfis-sociais/" + provider + "/" + result.id)
-			                	.then(function() {
-			                		console.log("Usuário encontrado");
-			                	}, function() {
-			                		console.warn("Usuário não encontrado");
-			                	});
-			            });
-			    }, function(error) {
-			        console.warn(error);
-			    });
+							api.get("/perfis-sociais/" + provider + "/" + result.id)
+								.then(function() {
+									// console.log("Usuário encontrado");
+								}, function() {
+									// console.warn("Usuário não encontrado");
+								});
+						});
+				}, function(error) {
+					// console.warn(error);
+				});
 		}
 
 	};
 
 	customElements.define("page-login", pages.PageLogin);
 
-})( window.pages );
+}( window.pages, window.customElements, window.innerHTML, window.restyle, window.OAuth, window.api ));
