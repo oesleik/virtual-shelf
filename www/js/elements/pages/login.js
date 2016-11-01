@@ -1,4 +1,4 @@
-(function(pages, customElements, innerHTML, restyle, OAuth, api) {
+(function(pages, customElements, innerHTML, restyle) {
 	"use strict";
 
 	pages.PageLogin = class extends pages.PageBlank {
@@ -22,7 +22,7 @@
 				</div>`
 			);
 
-			Array.from(this.querySelectorAll("button-social-login")).forEach(button => {
+			Array.from(this.querySelectorAll("button-social-login")).forEach((button) => {
 				button.addEventListener("userExists", this.userExistsCallback, false);
 				button.addEventListener("userNotExists", this.userNotExistsCallback, false);
 			});
@@ -66,13 +66,13 @@
 		}
 
 		userExistsCallback(event) {
-			console.log("Usuário encontrado");
-			console.log(event);
+			// console.log("Usuário encontrado");
+			// console.log(event);
 		}
 
 		userNotExistsCallback(event) {
-			console.log("Usuário não encontrado");
-			console.log(event);
+			// console.log("Usuário não encontrado");
+			// console.log(event);
 		}
 
 	};

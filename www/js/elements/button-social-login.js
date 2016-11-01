@@ -1,4 +1,4 @@
-(function(elements, customElements, innerHTML, restyle) {
+(function(elements, customElements, innerHTML, restyle, componentHandler, OAuth, api) {
 	"use strict";
 
 	elements.ButtonSocialLogin = class extends elements.HTMLElement {
@@ -40,7 +40,7 @@
 							.then(function() {
 								self.dispatchEvent(new CustomEvent("userExists", {
 									detail: {
-										user: user,
+										user,
 										access: result
 									}
 								}));
@@ -75,4 +75,4 @@
 
 	customElements.define("button-social-login", elements.ButtonSocialLogin);
 
-}( window.elements, window.customElements, window.innerHTML, window.restyle ));
+}( window.elements, window.customElements, window.innerHTML, window.restyle, window.componentHandler, window.OAuth, window.api ));
