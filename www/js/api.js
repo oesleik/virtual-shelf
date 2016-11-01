@@ -3,42 +3,46 @@ var api = {
 	baseUrl: "http://localhost/~oeslei.250995/virtual-shelf/public_html/api/v1",
 
 	get(path) {
-		return fetch(this.baseUrl + path).then(this.parseResponse);
+		return this.request(path, "GET");
 	},
 
 	add(path, data) {
-		return fetch(this.baseUrl + path, {
-			method: "POST",
-			body: data || {},
-		}).then(this.parseResponse);
+		return this.request(path, "POST", data);
 	},
 
 	edit(path, data) {
-		return fetch(this.baseUrl + path, {
-			method: "PUT",
-			body: data || {},
-		}).then(this.parseResponse);
+		return this.request(path, "PUT", data);
 	},
 
 	delete(path) {
-		return fetch(this.baseUrl + path, {
-			method: "DELETE"
-		}).then(this.parseResponse);
+		return this.request(path, "DELETE");
+	},
+
+	request(path, method, data) {
+		var config = { method };
+
+		if (method !== "GET" && method !== "HEAD") {
+			data = JSON.stringify(data || {});
+			config.body = data;
+		}
+
+		return fetch(this.baseUrl + path, config).then(this.parseResponse);
 	},
 
 	parseResponse(response) {
 		if (response.ok) {
-			return response.json()
-				.then(function(json) {
-					return json.status === 200 ? json.message : Promise.reject(json.error || "Erro na resposta do servidor");
+			return response.text()
+				.then(function(text) {
+					try {
+						var json = JSON.parse(text);
+						return json.status === 200 ? json.message : Promise.reject(json.error || "Erro na resposta do servidor");
+					} catch (e) {
+						return Promise.reject(text);
+					}
 				});
 		} else {
 			return Promise.reject("Erro ao executar chamada ao servidor");
 		}
-	},
-
-	parseError(error) {
-		return error.message;
 	}
 
 };
