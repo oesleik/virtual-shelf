@@ -36,7 +36,7 @@ class Prateleiras extends Services {
 		Prateleira::where("id", $id)->update($dados);
 		$prateleira = Prateleira::find($id);
 
-		return $this->parseResponse($res, $login)
+		return $this->parseResponse($res, $login);
 	}
 
 	public function delete($req, $res) {
