@@ -13,4 +13,20 @@
 
 	};
 
+	pages.PageMain = class extends HTMLElement {
+
+		constructor(self) {
+			self = super(self);
+			self.init();
+			return self;
+		}
+
+		init() {}
+
+		connectedCallback() {
+			// adicionar estrutura inicial da página
+		}
+
+	};
+
 }( window.pages = {} ));

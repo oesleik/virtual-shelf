@@ -13,7 +13,8 @@
         <title>Virtual Shelf</title>
     </head>
     <body>
-        <app-router mode="hash" init="manual">
+        <app-router mode="hash">
+            <app-route path="/splash" element="page-splash"></app-route>
             <app-route path="/home" element="page-home"></app-route>
             <app-route path="/login" element="page-login"></app-route>
             <app-route path="*" redirect="/home"></app-route>
@@ -35,6 +36,7 @@
         <script src="js/elements/elements.js"></script>
         <script src="js/elements/pages/pages.js"></script>
 
+        <script src="js/elements/pages/splash.js"></script>
         <script src="js/elements/pages/home.js"></script>
         <script src="js/elements/pages/login.js"></script>
 

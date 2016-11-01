@@ -1,14 +1,15 @@
 (function(pages, customElements, innerHTML) {
 	"use strict";
 
-	pages.PageHome = class extends pages.PageBlank {
+	pages.PageHome = class extends pages.PageMain {
 
 		connectedCallback() {
-			var usuario = auth.getUser();
+			super.connectedCallback();
+			// var usuario = auth.getUser();
 
-			innerHTML(this, `
-				Seja bem vindo, ${usuario.nome}`
-			);
+			// innerHTML(this, `
+			// 	Seja bem vindo, ${usuario.nome}`
+			// );
 		}
 
 	};
