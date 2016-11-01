@@ -2,3 +2,4 @@ config.user.php
 *.sublime-project
 *.sublime-workspace
 .jshintrc
+/ignore/*
