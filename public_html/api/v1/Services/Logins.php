@@ -36,7 +36,7 @@ class Logins extends Services {
 		Login::where("id", $id)->update($dados);
 		$perfil_social = Login::find($id);
 
-		return $this->parseResponse($res, $login)
+		return $this->parseResponse($res, $login);
 	}
 
 	public function delete($req, $res) {

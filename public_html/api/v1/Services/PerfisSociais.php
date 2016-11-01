@@ -38,23 +38,24 @@ class PerfisSociais extends Services {
 	}
 
 	public function add($req, $res) {
-		$dados = $req->getBody();
-		return $this->parseResponse($res, $dados);
+		$dados = $this->parseRequestBody($req);
+		$perfilSocial = PerfilSocial::create($dados);
+		return $this->parseResponse($res, $perfilSocial);
 	}
 
 	public function edit($req, $res) {
 		$id = $req->getAttribute("id");
 		$dados = $this->parseRequestBody($req);
 
-		Perfil_social::where("id", $id)->update($dados);
-		$perfil_social = Perfil_social::find($id);
+		PerfilSocial::where("id", $id)->update($dados);
+		$perfilSocial = PerfilSocial::find($id);
 
-		return $this->parseResponse($res, $perfil_social);
+		return $this->parseResponse($res, $perfilSocial);
 	}
 
 	public function delete($req, $res) {
 		$id = $req->getAttribute("id");
-		$deleted = (bool) Perfil_social::destroy($id);
+		$deleted = (bool) PerfilSocial::destroy($id);
 		return $this->parseResponse($res, $deleted);
 	}
 
