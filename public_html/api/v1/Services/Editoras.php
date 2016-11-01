@@ -23,14 +23,14 @@ class Editoras extends Services {
 	}
 
 	public function add($req, $res) {
-		$dados = $req->getParsedBody();
+		$dados = $this->parseRequestBody($req);
 		$editora = Editora::create($dados);
 		return $this->parseResponse($res, $editora);
 	}
 
 	public function edit($req, $res) {
 		$id = $req->getAttribute("id");
-		$dados = $req->getParsedBody();
+		$dados = $this->parseRequestBody($req);
 
 		Editora::where("id", $id)->update($dados);
 		$editora = Editora::find($id);
