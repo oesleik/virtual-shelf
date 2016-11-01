@@ -13,16 +13,19 @@
 				<div class="container-acoes">
 					Entrar com
 					<div class="acoes">
-						<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored" style="background-color: #F44336;">Google+</button>
+						<button-social-login provider="google">Google+</button-social-login>
 						<br />
-						<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored" style="background-color: #01579B;">Facebook</button>
+						<button-social-login provider="facebook">Facebook</button-social-login>
 						<br />
-						<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored" style="background-color: #03A9F4;">Twitter</button>
+						<button-social-login provider="twitter">Twitter</button-social-login>
 					</div>
 				</div>`
 			);
 
-			this.querySelector("button").addEventListener("click", this.efetuarLogin.bind(this, "google"), false);
+			Array.from(this.querySelectorAll("button-social-login")).forEach(button => {
+				button.addEventListener("userExists", this.userExistsCallback, false);
+				button.addEventListener("userNotExists", this.userNotExistsCallback, false);
+			});
 
 			this.refStyle = restyle({
 				"page-login": {
@@ -52,43 +55,24 @@
 					"bottom": 0,
 					"left": 0
 				},
-				"page-login button": {
+				"page-login button-social-login": {
 					"margin": "5px 0 !important",
-					"width": "100%",
-					"max-width": "180px",
-					"fontWeight": "bold !important",
-					"textTransform": "initial !important"
 				}
 			}, []);
-
-			componentHandler.upgradeElements(this.querySelectorAll("button"));
 		}
 
 		disconnectedCallback() {
 			this.refStyle.remove();
 		}
 
-		efetuarLogin(provider) {
-			OAuth.initialize("ldh8aAt-ZnZprccwh7ZdtAGTJQw");
+		userExistsCallback(event) {
+			console.log("Usuário encontrado");
+			console.log(event);
+		}
 
-			OAuth.popup(provider)
-				.then(function(result) {
-					// console.info(result);
-
-					result.me()
-						.then(function(result) {
-							// console.log(result);
-
-							api.get("/perfis-sociais/" + provider + "/" + result.id)
-								.then(function() {
-									// console.log("Usuário encontrado");
-								}, function() {
-									// console.warn("Usuário não encontrado");
-								});
-						});
-				}, function(error) {
-					// console.warn(error);
-				});
+		userNotExistsCallback(event) {
+			console.log("Usuário não encontrado");
+			console.log(event);
 		}
 
 	};
