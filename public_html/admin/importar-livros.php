@@ -1,6 +1,6 @@
 <?php
 
-require "../api/v1/config.php";
+require "../../config.php";
 
 $client = new Google_Client();
 
