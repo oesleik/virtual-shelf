@@ -1,4 +1,4 @@
-(function(pages, customElements, innerHTML, restyle) {
+(function(pages, customElements, innerHTML, restyle, api) {
 	"use strict";
 
 	pages.PageLogin = class extends pages.PageBlank {
@@ -66,17 +66,75 @@
 		}
 
 		userExistsCallback(event) {
-			// console.log("Usuário encontrado");
-			// console.log(event);
+			var perfilSocial = event.detail.perfilSocial;
+
+			api.get("/usuarios/" + perfilSocial.id_usuario)
+				.then(function(usuario) {
+					auth.setUser(usuario);
+					app.goTo("home");
+				}, function() {
+					ui.alert("Ocorreu algum problema ao efetuar o login.\nPor favor, tente novamente mais tarde.");
+				});
 		}
 
 		userNotExistsCallback(event) {
-			// console.log("Usuário não encontrado");
-			// console.log(event);
+			var provider = event.detail.provider;
+			var user = event.detail.user;
+			var access = event.detail.access;
+
+			var usuario = {
+				nome: user.firstname,
+				sobrenome: user.lastname,
+				apelido: user.firstname,
+				email: user.email,
+				avatar: user.avatar
+			};
+
+			var perfilSocial = {
+				id_usuario: 0,
+				id_usuario_rede: user.id,
+				email: user.email,
+				avatar: user.avatar,
+				url: user.url,
+				rede_social: provider
+			};
+
+			var login = {
+				id_usuario: 0,
+				id_perfil_social: 0,
+				token: access.access_token,
+				expires_in: access.expires_in,
+				refresh_token: access.refresh_token,
+				token_id: access.id_token,
+				token_type: access.token_type
+			};
+
+			api.add("/usuarios", usuario)
+				.then(function(response) {
+					usuario = response;
+					perfilSocial.id_usuario = usuario.id;
+
+					return api.add("/perfis-sociais", perfilSocial);
+				})
+				.then(function(response) {
+					perfilSocial = response;
+					login.id_usuario = usuario.id;
+					login.id_perfil_social = perfilSocial.id;
+
+					return api.add("/logins", login);
+				})
+				.then(function(response) {
+					login = response;
+					auth.setUser(usuario);
+					app.goTo("home");
+				})
+				.then(null, function() {
+					ui.alert("Ocorreu algum problema ao tentar efetuar seu cadastro.\nPor favor, tente novamente mais tarde.");
+				});
 		}
 
 	};
 
 	customElements.define("page-login", pages.PageLogin);
 
-}( window.pages, window.customElements, window.innerHTML, window.restyle, window.OAuth, window.api ));
+}( window.pages, window.customElements, window.innerHTML, window.restyle, window.api ));

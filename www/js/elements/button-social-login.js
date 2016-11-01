@@ -34,12 +34,17 @@
 			OAuth.initialize("ldh8aAt-ZnZprccwh7ZdtAGTJQw");
 
 			OAuth.popup(provider)
-				.then(function(result) {
-					result.me().then(function(user) {
-						var details = { user, access: result };
+				.then(function(response) {
+					response.me().then(function(user) {
+						var details = {
+							provider,
+							user,
+							access: response
+						};
 
 						api.get("/perfis-sociais/" + provider + "/" + user.id)
-							.then(function() {
+							.then(function(perfilSocial) {
+								details.perfilSocial = perfilSocial;
 								self.dispatchEvent(new CustomEvent("userExists", { detail: details }));
 							}, function() {
 								self.dispatchEvent(new CustomEvent("userNotExists", { detail: details }));

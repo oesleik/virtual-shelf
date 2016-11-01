@@ -4,8 +4,10 @@
 	pages.PageHome = class extends pages.PageBlank {
 
 		connectedCallback() {
-			innerHTML(this,
-				`<br /><a href="#/login" style="margin: 15px;">Página de login</a>`
+			var usuario = auth.getUser();
+
+			innerHTML(this, `
+				Seja bem vindo, ${usuario.nome}`
 			);
 		}
 
