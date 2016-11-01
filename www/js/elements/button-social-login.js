@@ -36,21 +36,13 @@
 			OAuth.popup(provider)
 				.then(function(result) {
 					result.me().then(function(user) {
+						var details = { user, access: result };
+
 						api.get("/perfis-sociais/" + provider + "/" + user.id)
 							.then(function() {
-								self.dispatchEvent(new CustomEvent("userExists", {
-									detail: {
-										user,
-										access: result
-									}
-								}));
+								self.dispatchEvent(new CustomEvent("userExists", { detail: details }));
 							}, function() {
-								self.dispatchEvent(new CustomEvent("userNotExists", {
-									detail: {
-										user: user,
-										access: result
-									}
-								}));
+								self.dispatchEvent(new CustomEvent("userNotExists", { detail: details }));
 							});
 					});
 				}, function(error) {

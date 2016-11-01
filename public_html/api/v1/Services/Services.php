@@ -5,7 +5,7 @@ namespace Services;
 abstract class Services {
 
 	const SUCCESS = 200;
-	const ERROR = 500;
+	const ERROR = 400;
 
 	protected function parseResponse($res, $response, $status = self::SUCCESS) {
 		$result = [];
