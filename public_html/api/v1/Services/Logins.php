@@ -23,7 +23,7 @@ class Logins extends Services {
 	}
 
 	public function add($req, $res) {
-		$dados = $req->getParsedBody();
+		$dados = $this->parseRequestBody($req);
 		$login = Login::create($dados);
 		return $this->parseResponse($res, $login);
 
@@ -31,7 +31,7 @@ class Logins extends Services {
 
 	public function edit($req, $res) {
 		$id = $req->getAttribute("id");
-		$dados = $req->getParsedBody();
+		$dados = $this->parseRequestBody($req);
 
 		Login::where("id", $id)->update($dados);
 		$perfil_social = Login::find($id);

@@ -23,14 +23,14 @@ class Volumes extends Services {
 	}
 
 	public function add($req, $res) {
-		$dados = $req->getParsedBody();
+		$dados = $this->parseRequestBody($req);
 		$volume = Volume::create($dados);
 		return $this->parseResponse($res, $volume);
 	}
 
 	public function edit($req, $res) {
 		$id = $req->getAttribute("id");
-		$dados = $req->getParsedBody();
+		$dados = $this->parseRequestBody($req);
 
 		Volume::where("id", $id)->update($dados);
 		$volume = Volume::find($id);

@@ -44,7 +44,7 @@ class PerfisSociais extends Services {
 
 	public function edit($req, $res) {
 		$id = $req->getAttribute("id");
-		$dados = $req->getParsedBody();
+		$dados = $this->parseRequestBody($req);
 
 		Perfil_social::where("id", $id)->update($dados);
 		$perfil_social = Perfil_social::find($id);

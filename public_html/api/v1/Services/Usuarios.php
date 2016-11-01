@@ -23,14 +23,14 @@ class Usuarios extends Services {
 	}
 
 	public function add($req, $res) {
-		$dados = $req->getParsedBody();
+		$dados = $this->parseRequestBody($req);
 		$usuario = Usuario::create($dados);
 		return $this->parseResponse($res, $usuario);
 	}
 
 	public function edit($req, $res) {
 		$id = $req->getAttribute("id");
-		$dados = $req->getParsedBody();
+		$dados = $this->parseRequestBody($req);
 
 		Usuario::where("id", $id)->update($dados);
 		$usuario = Usuario::find($id);
