@@ -16,7 +16,7 @@ class ComentarioModeracoes extends Services {
 		$comentario = ComentarioModeracao::find($id);
 
 		if ($comentario === null) {
-			return $this->parseResponse($res, "Comentário não encontrado", self::ERROR);
+			return $this->parseResponse($res, "Comentário de moderação não encontrado", self::ERROR);
 		} else {
 			return $this->parseResponse($res, $comentario);
 		}
