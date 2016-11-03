@@ -3,3 +3,5 @@ config.user.php
 *.sublime-workspace
 .jshintrc
 /ignore/*
+/platforms/*
+/plugins/*
