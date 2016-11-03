@@ -16,6 +16,8 @@ var app = {
     },
 
     onDeviceReady() {
+        window.open = cordova.InAppBrowser.open;
+
         var router = document.querySelector("app-router");
         this.goTo("splash");
         router.init();
