@@ -17,7 +17,8 @@ $app->delete("/usuarios/{id}", "Services\Usuarios:delete");
 
 // Volume
 $app->get("/volumes", "Services\Volumes:getAll");
-$app->get("/volumes/{id}", "Services\Volumes:get");
+$app->get("/volumes/{id:\d+}", "Services\Volumes:get");
+$app->get("/volumes/pesquisa/{pesquisa}", "Services\Volumes:getPesquisa");
 $app->post("/volumes", "Services\Volumes:add");
 
 // Login

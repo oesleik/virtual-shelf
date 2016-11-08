@@ -22,6 +22,12 @@ class Volumes extends Services {
 		}
 	}
 
+	public function getPesquisa($req, $res) {
+		$id = $req->getAttribute("pesquisa");
+		$volumes = Volume::all();
+		return $this->parseResponse($res, $volumes);
+	}
+
 	public function add($req, $res) {
 		$dados = $this->parseRequestBody($req);
 		$volume = Volume::create($dados);
