@@ -26,7 +26,7 @@ var app = {
     },
 
     prepareEnv() {
-        if (this.production) {
+        if (window.cordova) {
             window.open = window.cordova.InAppBrowser.open;
         }
     },
