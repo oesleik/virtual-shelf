@@ -78,9 +78,7 @@
 		}
 
 		userNotExistsCallback(event) {
-			var provider = event.detail.provider;
-			var user = event.detail.user;
-			var access = event.detail.access;
+			var { provider, user, access } = event.detail;
 
 			var usuario = {
 				"nome": user.firstname,

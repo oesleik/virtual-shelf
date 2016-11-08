@@ -1,4 +1,4 @@
-(function(elements, customElements, innerHTML, restyle, componentHandler, OAuth, api) {
+(function(elements, customElements, innerHTML, restyle, OAuth, api, app) {
 	"use strict";
 
 	elements.ButtonSocialLogin = class extends elements.HTMLElement {
@@ -24,9 +24,8 @@
 				<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored" style="background-color: ${color};">${this.innerHTML}</button>`
 			);
 
+			app.atualizarComponentes(this);
 			this.querySelector("button").addEventListener("click", this.efetuarLogin.bind(this, provider), false);
-
-			componentHandler.upgradeElements(this.querySelectorAll("button"));
 		}
 
 		efetuarLogin(provider) {
@@ -72,4 +71,4 @@
 
 	customElements.define("button-social-login", elements.ButtonSocialLogin);
 
-}( window.elements, window.customElements, window.innerHTML, window.restyle, window.componentHandler, window.OAuth, window.api ));
+}( window.elements, window.customElements, window.innerHTML, window.restyle, window.OAuth, window.api, app ));

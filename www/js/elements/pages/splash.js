@@ -1,9 +1,18 @@
-(function(pages, customElements, innerHTML, restyle) {
+(function(pages, customElements, innerHTML, restyle, app, auth) {
 	"use strict";
 
 	pages.PageSplash = class extends pages.PageBlank {
 
 		connectedCallback() {
+			if (auth.isUser()) {
+				setTimeout(() => {
+					app.goTo("home");
+				}, 1500);
+			} else {
+				app.goTo("login");
+				return;
+			}
+
 			innerHTML(this, `
 				<div class="container-logo">
 					<img src="img/logo-login.png" />
@@ -42,4 +51,4 @@
 
 	customElements.define("page-splash", pages.PageSplash);
 
-}( window.pages, window.customElements, window.innerHTML, window.restyle ));
+}( window.pages, window.customElements, window.innerHTML, window.restyle, window.app, window.auth ));

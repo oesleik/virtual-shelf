@@ -1,7 +1,6 @@
 var app = {
 
     production: false,
-    router: null,
 
     initialize() {
         this.bindEvents();
@@ -16,15 +15,26 @@ var app = {
     },
 
     onDeviceReady() {
-        window.open = cordova.InAppBrowser.open;
+        this.prepareEnv();
 
-        var router = document.querySelector("app-router");
         this.goTo("splash");
-        router.init();
+        document.querySelector("app-router").init();
     },
 
     goTo(path) {
         window.location.href = "#/" + path;
+    },
+
+    prepareEnv() {
+        if (this.production) {
+            window.open = window.cordova.InAppBrowser.open;
+        }
+    },
+
+    atualizarComponentes(elementos) {
+        // setTimeout(() => {
+            window.componentHandler.upgradeElements(elementos);
+        // }, 100);
     }
 
 };
