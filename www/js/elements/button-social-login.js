@@ -71,4 +71,4 @@
 
 	customElements.define("button-social-login", elements.ButtonSocialLogin);
 
-}( window.elements, window.customElements, window.innerHTML, window.restyle, window.OAuth, window.api, app ));
+}( window.elements, window.customElements, window.innerHTML, window.restyle, window.OAuth, window.api, window.app ));

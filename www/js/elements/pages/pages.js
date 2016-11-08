@@ -1,4 +1,4 @@
-(function(pages, app) {
+(function(pages, innerHTML, app) {
 	"use strict";
 
 	pages.PageBlank = class extends HTMLElement {
@@ -44,4 +44,4 @@
 
 	};
 
-}( window.pages = {}, window.app ));
+}( window.pages = {}, window.innerHTML, window.app ));

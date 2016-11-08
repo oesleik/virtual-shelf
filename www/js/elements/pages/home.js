@@ -5,7 +5,6 @@
 
 		connectedCallback() {
 			super.connectedCallback();
-			var usuario = auth.getUser();
 
 			innerHTML(this.querySelector("#page-tabs"), `
 				<a href="#scroll-tab-1" class="mdl-layout__tab is-active">Meus livros</a>
