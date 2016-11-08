@@ -2,18 +2,18 @@
 
 namespace Services;
 
-use Models\Login;
+use Models\Prateleira;
 
 class Prateleiras extends Services {
 
 	public function getAll($req, $res) {
-		$preteleiras = Login::all();
+		$preteleiras = Prateleira::all();
 		return $this->parseResponse($res, $preteleiras);
 	}
 
 	public function get($req, $res) {
 		$id = $req->getAttribute("id");
-		$prateleira = Login::find($id);
+		$prateleira = Prateleira::find($id);
 
 		if ($prateleira === null) {
 			return $this->parseResponse($res, "Prateleira inválido", self::ERROR);
@@ -25,7 +25,7 @@ class Prateleiras extends Services {
 	public function add($req, $res) {
 		$dados = $this->parseRequestBody($req);
 		$prateleira = Prateleira::create($dados);
-		return $this->parseResponse($res, $login);
+		return $this->parseResponse($res, $prateleira);
 
 	}
 
@@ -36,7 +36,7 @@ class Prateleiras extends Services {
 		Prateleira::where("id", $id)->update($dados);
 		$prateleira = Prateleira::find($id);
 
-		return $this->parseResponse($res, $login);
+		return $this->parseResponse($res, $prateleira);
 	}
 
 	public function delete($req, $res) {

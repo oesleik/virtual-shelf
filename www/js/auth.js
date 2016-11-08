@@ -20,11 +20,11 @@ var auth = {
 	},
 
 	isUser() {
-		return getUser() !== false;
+		return this.getUser() !== false;
 	},
 
 	isGuest() {
-		return getUser() === false;
+		return this.getUser() === false;
 	}
 
 };

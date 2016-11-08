@@ -34,7 +34,7 @@ class Logins extends Services {
 		$dados = $this->parseRequestBody($req);
 
 		Login::where("id", $id)->update($dados);
-		$perfil_social = Login::find($id);
+		$login = Login::find($id);
 
 		return $this->parseResponse($res, $login);
 	}

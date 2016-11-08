@@ -1,4 +1,4 @@
-(function(pages, customElements, innerHTML, restyle, api) {
+(function(pages, customElements, innerHTML, restyle, api, auth, app, ui) {
 	"use strict";
 
 	pages.PageLogin = class extends pages.PageBlank {
@@ -83,30 +83,30 @@
 			var access = event.detail.access;
 
 			var usuario = {
-				nome: user.firstname,
-				sobrenome: user.lastname,
-				apelido: user.firstname,
-				email: user.email,
-				avatar: user.avatar
+				"nome": user.firstname,
+				"sobrenome": user.lastname,
+				"apelido": user.firstname,
+				"email": user.email,
+				"avatar": user.avatar
 			};
 
 			var perfilSocial = {
-				id_usuario: 0,
-				id_usuario_rede: user.id,
-				email: user.email,
-				avatar: user.avatar,
-				url: user.url,
-				rede_social: provider
+				"id_usuario": 0,
+				"id_usuario_rede": user.id,
+				"email": user.email,
+				"avatar": user.avatar,
+				"url": user.url,
+				"rede_social": provider
 			};
 
 			var login = {
-				id_usuario: 0,
-				id_perfil_social: 0,
-				token: access.access_token,
-				expires_in: access.expires_in,
-				refresh_token: access.refresh_token,
-				token_id: access.id_token,
-				token_type: access.token_type
+				"id_usuario": 0,
+				"id_perfil_social": 0,
+				"token": access.access_token,
+				"expires_in": access.expires_in,
+				"refresh_token": access.refresh_token,
+				"token_id": access.id_token,
+				"token_type": access.token_type
 			};
 
 			api.add("/usuarios", usuario)
@@ -137,4 +137,4 @@
 
 	customElements.define("page-login", pages.PageLogin);
 
-}( window.pages, window.customElements, window.innerHTML, window.restyle, window.api ));
+}( window.pages, window.customElements, window.innerHTML, window.restyle, window.api, window.auth, window.app, window.ui ));
