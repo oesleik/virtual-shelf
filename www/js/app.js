@@ -32,9 +32,8 @@ var app = {
     },
 
     atualizarComponentes(elementos) {
-        // setTimeout(() => {
-            window.componentHandler.upgradeElements(elementos);
-        // }, 100);
+        // executa no próximo frame para garantir que o elemento já esteja no DOM
+        setTimeout(() => { window.componentHandler.upgradeElements(elementos); }, 0);
     }
 
 };
