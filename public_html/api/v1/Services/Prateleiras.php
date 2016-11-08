@@ -7,8 +7,8 @@ use Models\Prateleira;
 class Prateleiras extends Services {
 
 	public function getAll($req, $res) {
-		$preteleiras = Prateleira::all();
-		return $this->parseResponse($res, $preteleiras);
+		$prateleiras = Prateleira::all();
+		return $this->parseResponse($res, $prateleiras);
 	}
 
 	public function get($req, $res) {
