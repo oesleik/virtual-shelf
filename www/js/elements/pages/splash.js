@@ -7,7 +7,7 @@
 			if (auth.isUser()) {
 				setTimeout(() => {
 					app.goTo("home");
-				}, 1500);
+				}, 0);
 			} else {
 				app.goTo("login");
 				return;

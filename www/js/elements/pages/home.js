@@ -8,20 +8,32 @@
 
 			innerHTML(this.querySelector("#page-tabs"), `
 				<a href="#scroll-tab-1" class="mdl-layout__tab is-active">Meus livros</a>
-				<a href="#scroll-tab-2" class="mdl-layout__tab">Meus interesses</a>
-				<a href="#scroll-tab-3" class="mdl-layout__tab">Alguma outra tab</a>`
+				<a href="#scroll-tab-2" class="mdl-layout__tab">Meus interesses</a>`
 			);
 
 			innerHTML(this.querySelector("#page-content"), `
-				<section class="mdl-layout__tab-panel is-active" id="scroll-tab-1">
-					<div class="page-content">Conteúdo página 1</div>
+				<section  id="scroll-tab-1" class="mdl-layout__tab-panel is-active">
+					<lista-volumes></lista-volumes>
 				</section>
-				<section class="mdl-layout__tab-panel" id="scroll-tab-2">
-					<div class="page-content">Conteúdo página 2</div>
+				<section  id="scroll-tab-2" class="mdl-layout__tab-panel">
+					<lista-volumes></lista-volumes>
 				</section>`
 			);
 
 			app.atualizarComponentes(this);
+
+			Array.from(this.querySelectorAll("lista-volumes")).forEach((lista) => {
+				lista.addEventListener("filterChanged", this.listarVolumes.bind(this), false);
+			});
+		}
+
+		listarVolumes(event) {
+			var lista = event.target;
+			var pesquisa = lista.querySelector(".lista-volumes-pesquisa").value;
+
+			api.get("/volumes/pesquisa/" + pesquisa).then((volumes) => {
+				console.log(volumes);
+			});
 		}
 
 	};
