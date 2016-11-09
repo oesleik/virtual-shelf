@@ -32,3 +32,4 @@ if (Config::get("debug")) {
 require Config::get("root") . "vendor/autoload.php";
 require Config::get("rootApi") . "autoload.php";
 require Config::get("rootApi") . "connection.php";
+require Config::get("rootApi") . "Utils.php";
