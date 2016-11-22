@@ -64,12 +64,12 @@ class Volumes extends Services {
 		return $this->parseResponse($res, $deleted);
 	}
 
-	protected _parseVolumeGoogle($item) {
+	protected function _parseVolumeGoogle($item) {
 		$related = array();
 		$info = $item["volumeInfo"];
 
 		$editora = Editora::firstOrCreate([
-			"nome" => $info["publisher"]
+			"nome" => $info["publisher"] ?: "Desconhecida"
 		]);
 		$related["editora"] = $editora;
 
@@ -84,7 +84,7 @@ class Volumes extends Services {
 		]);
 
 		$related["autores"] = array();
-		foreach ($info["authors"] as $nome) {
+		foreach ((array) $info["authors"] as $nome) {
 			$autor = Autor::firstOrCreate([
 				"nome" => $nome
 			]);
@@ -97,7 +97,7 @@ class Volumes extends Services {
 		}
 
 		$related["categorias"] = array();
-		foreach ($info["categories"] as $nome) {
+		foreach ((array) $info["categories"] as $nome) {
 			$categoria = Categoria::firstOrCreate([
 				"nome" => $nome
 			]);
