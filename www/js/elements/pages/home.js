@@ -13,11 +13,9 @@
 
 			innerHTML(this.querySelector("#page-content"), `
 				<section  id="scroll-tab-1" class="mdl-layout__tab-panel is-active">
-					<lista-volumes></lista-volumes>
+					<a href="#/pesquisar-livros">Pesquisar livros</a>
 				</section>
-				<section  id="scroll-tab-2" class="mdl-layout__tab-panel">
-					<lista-volumes></lista-volumes>
-				</section>`
+				<section  id="scroll-tab-2" class="mdl-layout__tab-panel"></section>`
 			);
 
 			app.atualizarComponentes(this);

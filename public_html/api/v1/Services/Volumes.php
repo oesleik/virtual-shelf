@@ -75,7 +75,7 @@ class Volumes extends Services {
 
 		$volume = Volume::firstOrCreate([
 			"titulo" => $info["title"],
-			"isbn" => $info["industryIdentifiers"][0]["identifier"],
+			"isbn" => isset($info["industryIdentifiers"][0]["identifier"]) ? $info["industryIdentifiers"][0]["identifier"] : "",
 			"paginas" => $info["pageCount"],
 			"linguagem" => $info["language"],
 			"dataPublicacao" => $info["publishedDate"],
