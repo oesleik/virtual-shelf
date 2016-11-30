@@ -27,6 +27,20 @@ var utils = {
 		return obj;
 	},
 
+	fillFormValues(idForm, data) {
+		var form = document.getElementById(idForm);
+		var element;
+
+		for (var id in data) {
+			element = form.querySelector("#" + id);
+			console.log(id);
+
+			if (element && ["input", "select"].indexOf(element.tagName) >= 0) {
+				element.value = data[id];
+			}
+		}
+	},
+
 	escapeHtml(html) {
 		return html
 			.replace(/&/g, "&amp;")

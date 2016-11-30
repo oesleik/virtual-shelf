@@ -21,3 +21,25 @@ body {
 	display: table;
 	clear: both;
 }
+
+.mdl-layout__drawer .mdl-navigation__link {
+	color: #444 !important;
+	font-size: 18px;
+}
+
+.mdl-layout__drawer .mdl-navigation__link i {
+	float: right;
+	color: #666;
+}
+
+.form-full-width {
+	padding: 15px 15px;
+}
+
+.form-full-width .mdl-textfield {
+	width: 100%;
+}
+
+.form-full-width .actions {
+	margin-top: 15px;
+}
