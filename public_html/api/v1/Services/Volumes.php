@@ -9,6 +9,7 @@ use Models\VolumeAutor;
 use Models\Categoria;
 use Models\VolumeCategoria;
 use Models\VolumeImagem;
+use Models\VolumeUsuario;
 
 class Volumes extends Services {
 
@@ -128,6 +129,26 @@ class Volumes extends Services {
 		}
 
 		return array_merge($volume->toArray(), $related);
+	}
+
+
+	public function atualizarSituacaoVolumeUsuario($req, $res) {
+
+		$volumeUsuario = VolumeUsuario::updateOrCreate([
+			"id_volume" => $req->getAttribute("id"),
+			"id_usuario" => $req->getAttribute("id_usuario")
+		],["situacao" => $req->getAttribute("situacao")]);
+
+	}
+
+	public function atualizarAvaliacaoVolumeUsuario($req, $res) {
+
+		$volumeUsuario = VolumeUsuario::updateOrCreate([
+			"id_volume" => $req->getAttribute("id"),
+			"id_usuario" => $req->getAttribute("id_usuario")
+				
+		],["avaliacao" => $req->getAttribute("avaliacao")]);
+
 	}
 
 }
