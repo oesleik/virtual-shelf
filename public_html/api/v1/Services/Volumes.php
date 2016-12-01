@@ -139,6 +139,8 @@ class Volumes extends Services {
 			"id_usuario" => $req->getAttribute("id_usuario")
 		],["situacao" => $req->getAttribute("situacao")]);
 
+		return $this->parseResponse($res, $volumeUsuario);
+
 	}
 
 	public function atualizarAvaliacaoVolumeUsuario($req, $res) {
@@ -148,6 +150,8 @@ class Volumes extends Services {
 			"id_usuario" => $req->getAttribute("id_usuario")
 				
 		],["avaliacao" => $req->getAttribute("avaliacao")]);
+
+		return $this->parseResponse($res, $volumeUsuario);
 
 	}
 
