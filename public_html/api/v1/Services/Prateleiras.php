@@ -23,11 +23,23 @@ class Prateleiras extends Services {
 	}
 
 	public function add($req, $res) {
+
+		$id = $req->getAttribute("id_usuario");
 		$dados = $this->parseRequestBody($req);
-		$prateleira = Prateleira::create($dados);
+		$dados["id_usuario"]=$id;
+
+		//return $this->parseResponse($res, $dados);
+		//$prateleira = Prateleira::firstOrCreate([
+		//	'id_usuario' => $id,
+		//	"nome"=>$dados["nome"]
+		//	]);
+		$prateleira = Prateleira::firstOrCreate($dados);
+		
+
 		return $this->parseResponse($res, $prateleira);
 
 	}
+
 
 	public function edit($req, $res) {
 		$id = $req->getAttribute("id");
@@ -43,6 +55,12 @@ class Prateleiras extends Services {
 		$id = $req->getAttribute("id");
 		$deleted = (bool) Prateleira::destroy($id);
 		return $this->parseResponse($res, $deleted);
+	}
+
+	public function adicionarVolume($req, $res) {
+
+
+
 	}
 
 }
