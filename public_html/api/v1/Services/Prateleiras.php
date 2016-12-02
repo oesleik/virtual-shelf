@@ -3,6 +3,7 @@
 namespace Services;
 
 use Models\Prateleira;
+use Models\PrateleiraVolume;
 
 class Prateleiras extends Services {
 
@@ -52,9 +53,18 @@ class Prateleiras extends Services {
 		return $this->parseResponse($res, $deleted);
 	}
 
-	public function adicionarVolume($req, $res) {
+	public function addVolume($req, $res) {
 
+		$prateleira = $req->getAttribute("id_prateleira");
+		$volume = $req->getAttribute("id_volume");
+		$dados = $this->parseRequestBody($req);
+		$dados["id_prateleira"]=$prateleira;
+		$dados["id_volume"]=$volume;
 
+		$prateleira = PrateleiraVolume::firstOrCreate($dados);
+		
+
+		return $this->parseResponse($res, $prateleira);
 
 	}
 
