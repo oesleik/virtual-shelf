@@ -40,6 +40,6 @@ $app->get("/prateleiras/{id:\d+}/usuario/{id_usuario:\d+}", "Services\Prateleira
 $app->post("/prateleiras/usuario/{id_usuario:\d+}", "Services\Prateleiras:add");
 $app->post("/prateleiras/{id_prateleira:\d+}/usuario/{id_usuario:\d+}/volume/{id_volume:\d+}", "Services\Prateleiras:addVolume");
 $app->delete("/prateleiras/{id_prateleira:\d+}/usuario/{id_usuario:\d+}/volume/{id_volume:\d+}", "Services\Prateleiras:deleteVolume");
-$app->delete("/prateleiras/usuario/{id_usuario:\d+}", "Services\Prateleiras:delete");
+$app->delete("/prateleiras/{id_prateleira:\d+}/usuario/{id_usuario:\d+}", "Services\Prateleiras:delete");
 
 $app->run();
