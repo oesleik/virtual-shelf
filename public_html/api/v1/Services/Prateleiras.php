@@ -61,8 +61,7 @@ class Prateleiras extends Services {
 		$dados["id_volume"]=$req->getAttribute("id_volume");
 
 		$prateleira = Prateleira::find($dados["id_prateleira"]);
-		//return $this->parseResponse($res, $dados["id_prateleira"]);
-		//return $this->parseResponse($res, $dados);
+
 		if ($prateleira === null) {
 			return $this->parseResponse($res, "Prateleira não existe", self::ERROR);
 		} else {
