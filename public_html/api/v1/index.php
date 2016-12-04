@@ -39,7 +39,7 @@ $app->get("/prateleiras/usuario/{id_usuario:\d+}", "Services\Prateleiras:getAll"
 $app->get("/prateleiras/{id:\d+}/usuario/{id_usuario:\d+}", "Services\Prateleiras:get");
 $app->post("/prateleiras/usuario/{id_usuario:\d+}", "Services\Prateleiras:add");
 $app->post("/prateleiras/{id_prateleira:\d+}/usuario/{id_usuario:\d+}/volume/{id_volume:\d+}", "Services\Prateleiras:addVolume");
-$app->delete("/prateleiras/usuario/{id_usuario:\d+}/volume/{id_volume:\d+}", "Services\Prateleiras:deleteVolume");
+$app->delete("/prateleiras/{id_prateleira:\d+}/usuario/{id_usuario:\d+}/volume/{id_volume:\d+}", "Services\Prateleiras:deleteVolume");
 $app->delete("/prateleiras/usuario/{id_usuario:\d+}", "Services\Prateleiras:delete");
 
 $app->run();
