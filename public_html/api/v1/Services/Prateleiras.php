@@ -50,8 +50,39 @@ class Prateleiras extends Services {
 
 	public function delete($req, $res) {
 		$id = $req->getAttribute("id");
-		$deleted = (bool) Prateleira::destroy($id);
+		$deleted = (bool) Volume::destroy($id);
 		return $this->parseResponse($res, $deleted);
+	}
+
+	public function deleteVolume($req, $res) {
+
+		$dados = $this->parseRequestBody($req);
+		$dados["id_prateleira"]=$req->getAttribute("id_prateleira");
+		$dados["id_volume"]=$req->getAttribute("id_volume");
+
+		$prateleira = Prateleira::find($dados["id_prateleira"]);
+		//return $this->parseResponse($res, $dados["id_prateleira"]);
+		//return $this->parseResponse($res, $dados);
+		if ($prateleira === null) {
+			return $this->parseResponse($res, "Prateleira não existe", self::ERROR);
+		} else {
+
+			if ($prateleira["id_usuario"] == $req->getAttribute("id_usuario")){
+
+				if(Volume::find($req->getAttribute("id_volume")) === null){
+					return $this->parseResponse($res, "Este volume não existe", self::ERROR);
+				}else{
+
+					$registro = PrateleiraVolume::where("id_volume","=", $dados["id_volume"],"and","id_prateleira","=", $dados["id_prateleira"])->delete();
+
+					return $this->parseResponse($res, $registro);
+				}
+
+			} else{
+
+				return $this->parseResponse($res, "Esta prateleira não pertence a esse usuário", self::ERROR);
+			}	
+		}
 	}
 
 	public function addVolume($req, $res) {
@@ -76,7 +107,7 @@ class Prateleiras extends Services {
 					return $this->parseResponse($res, $volumeAdd);
 				}
 			} else{
-				
+
 				return $this->parseResponse($res, "Esta prateleira não pertence a esse usuário", self::ERROR);
 			}	
 		}	
