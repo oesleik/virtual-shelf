@@ -4,6 +4,7 @@ namespace Services;
 
 use Models\Prateleira;
 use Models\PrateleiraVolume;
+use Models\Volume;
 
 class Prateleiras extends Services {
 
@@ -55,17 +56,29 @@ class Prateleiras extends Services {
 
 	public function addVolume($req, $res) {
 
-		$prateleira = $req->getAttribute("id_prateleira");
-		$volume = $req->getAttribute("id_volume");
 		$dados = $this->parseRequestBody($req);
-		$dados["id_prateleira"]=$prateleira;
-		$dados["id_volume"]=$volume;
+		$dados["id_prateleira"]=$req->getAttribute("id_prateleira");
+		$dados["id_volume"]=$req->getAttribute("id_volume");
 
-		$prateleira = PrateleiraVolume::firstOrCreate($dados);
-		
+		$prateleira = Prateleira::find($dados["id_prateleira"]);
 
-		return $this->parseResponse($res, $prateleira);
+		if ($prateleira === null) {
+			return $this->parseResponse($res, "Prateleira não existe", self::ERROR);
+		} else {
 
+			if ($prateleira["id_usuario"] == $req->getAttribute("id_usuario")){
+
+				if(Volume::find($req->getAttribute("id_volume")) === null){
+					return $this->parseResponse($res, "Este volume não existe", self::ERROR);
+				}else{
+					
+					$volumeAdd = PrateleiraVolume::firstOrCreate($dados);
+					return $this->parseResponse($res, $volumeAdd);
+				}
+			} else{
+				
+				return $this->parseResponse($res, "Esta prateleira não pertence a esse usuário", self::ERROR);
+			}	
+		}	
 	}
-
 }
