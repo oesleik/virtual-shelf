@@ -8,8 +8,8 @@
 
 			if (this.volume != null) {
 				innerHTML(this, `
-					<img src="${this.volume.imagens.thumb_sm.caminho}" />
-					<h4>${this.volume.titulo}</h4>
+					<img src="${this.volume.imagens.thumb_sm.caminho}" class="js-exibir-volume" />
+					<h4 class="js-exibir-volume">${this.volume.titulo}</h4>
 					<h5>${this.volume.autores.map((autor) => autor.nome).join(", ")}</h5>
 					<div class="secondary">
 						<div class="status">Lido <i class="material-icons">arrow_drop_down</i></div>
@@ -25,7 +25,15 @@
 				);
 
 				app.atualizarComponentes(this);
+
+				Array.from(this.querySelectorAll(".js-exibir-volume")).forEach((element) => {
+					element.addEventListener("click", this.exibirVolume.bind(this), false);
+				});
 			}
+		}
+
+		exibirVolume() {
+			app.goTo("volume/" + this.volume.id);
 		}
 
 	};

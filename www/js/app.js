@@ -17,7 +17,7 @@ var app = {
     onDeviceReady() {
         this.prepareEnv();
 
-        this.goTo("pesquisar-livros");
+        this.goTo("home");
         document.querySelector("app-router").init();
     },
 

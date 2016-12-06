@@ -12,10 +12,10 @@
 			);
 
 			innerHTML(this.querySelector("#page-content"), `
-				<section  id="scroll-tab-1" class="mdl-layout__tab-panel is-active">
+				<section id="scroll-tab-1" class="mdl-layout__tab-panel is-active">
 					<a href="#/pesquisar-livros">Pesquisar livros</a>
 				</section>
-				<section  id="scroll-tab-2" class="mdl-layout__tab-panel"></section>`
+				<section id="scroll-tab-2" class="mdl-layout__tab-panel"></section>`
 			);
 
 			app.atualizarComponentes(this);

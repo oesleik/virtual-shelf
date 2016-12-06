@@ -74,6 +74,7 @@
 		return `<div class="mdl-layout__drawer">
 					<span class="mdl-layout-title">Virtual Shelf</span>
 					<nav class="mdl-navigation">
+						<a class="mdl-navigation__link" href="#/pesquisar-livros">Pesquisar livros <i class="material-icons">search</i></a>
 						<a class="mdl-navigation__link" href="#/configuracoes">Configurações <i class="material-icons">settings</i></a>
 					</nav>
 				</div>`;
