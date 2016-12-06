@@ -1,4 +1,4 @@
-(function(pages, customElements, innerHTML, app, history, utils, auth) {
+(function(pages, customElements, innerHTML, app, history, utils, auth, api) {
 	"use strict";
 
 	pages.PageConfiguracoes = class extends pages.PageDefault {
@@ -33,15 +33,20 @@
 				</form>`
 			);
 
+			this.obterDados();
 			app.atualizarComponentes(this);
+
 			this.querySelector("#btn-salvar").addEventListener("click", this.salvar.bind(this), false);
 			this.querySelector("#btn-cancelar").addEventListener("click", this.cancelar.bind(this), false);
-			setTimeout(this.obterDados.bind(this), 100);
 		}
 
 		salvar() {
 			var config = utils.getFormValues("config");
-			console.log(config);
+
+			api.edit("/usuarios/" + auth.getUser().id, config).then((user) => {
+				auth.setUser(user);
+				history.back();
+			});
 		}
 
 		cancelar() {
@@ -56,4 +61,4 @@
 
 	customElements.define("page-configuracoes", pages.PageConfiguracoes);
 
-}( window.pages, window.customElements, window.innerHTML, window.app, window.history, window.utils, window.auth ));
+}( window.pages, window.customElements, window.innerHTML, window.app, window.history, window.utils, window.auth, window.api ));

@@ -21,7 +21,10 @@ var utils = {
 
 		for (var i = 0; i < elements.length; i++) {
 			var item = elements.item(i);
-			obj[item.name] = item.value;
+
+			if (item.name.length) {
+				obj[item.name] = item.value;
+			}
 		}
 
 		return obj;
@@ -33,9 +36,8 @@ var utils = {
 
 		for (var id in data) {
 			element = form.querySelector("#" + id);
-			console.log(id);
 
-			if (element && ["input", "select"].indexOf(element.tagName) >= 0) {
+			if (element && ["INPUT", "SELECT"].indexOf(element.tagName) >= 0) {
 				element.value = data[id];
 			}
 		}
