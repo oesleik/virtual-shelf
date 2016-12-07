@@ -19,6 +19,20 @@
 			api.get("/volumes/" + this.getAttribute("id")).then((volume) => {
 				this.volume = volume;
 
+				var lojas = [{
+					"provider": "amazon",
+					"providerImage": "",
+					"search": `https://www.amazon.com/gp/search/ref=sr_adv_b/?search-alias=stripbooks&unfiltered=1&field-keywords=&field-author=&field-title=&field-isbn=${volume.isbn}&field-publisher=&node=&field-p_n_condition-type=&p_n_feature_browse-bin=&field-age_range=&field-language=&field-dateop=During&field-datemod=&field-dateyear=&sort=relevanceexprank&Adv-Srch-Books-Submit.x=32&Adv-Srch-Books-Submit.y=14`,
+				}, {
+					"provider": "submarino",
+					"providerImage": "",
+					"search": `http://www.submarino.com.br/portal/ResultadoBuscaAvancadaLivros/309573/?isbn=${volume.isbn}`,
+				}, {
+					"provider": "saraiva",
+					"providerImage": "",
+					"search": `http://www.editorasaraiva.com.br/produtos/?tipoBusca=3&tipoMidia=0&query=${volume.isbn}&catalogoNovidades=&area=&subarea=&disciplina=&nivelEnsino=&seloEditorial=&dataComemorativa=&temaTransversal=&tituloIndicado=`
+				}];
+
 				innerHTML(this.querySelector("#scroll-tab-1"), `
 					<div class="volume">
 						<div class="volume-imagem">
@@ -40,6 +54,8 @@
 								<i class="material-icons">star</i>
 								<i class="material-icons">star</i>
 								<i class="material-icons">star</i>
+							</div>
+							<div class="shop">
 							</div>
 						</div>
 					</div>`);
