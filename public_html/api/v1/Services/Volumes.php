@@ -29,8 +29,28 @@ class Volumes extends Services {
 			return $this->parseResponse($res, "Volume não encontrado", self::ERROR);
 		} else {
 			$related['editora'] = Editora::find($volume['id_editora']);
-			//$realted['autor'] = 
-		
+
+			$vaolumeDados = VolumeAutor::where('id_volume', [$volume["id"]])->get();
+			
+			foreach ($vaolumeDados as $nome) {
+				$autor = Autor::where('id', [$nome["id_autor"]])
+                    ->get();
+				$related["autores"][] = $autor;
+			}
+
+
+			$categoriaDados = VolumeCategoria::where('id_volume', [$volume["id"]])->get();
+			
+			foreach ($categoriaDados as $dado) {
+				$categoria = Categoria::where('id', [$dado["id_categoria"]])
+                    ->get();
+				$related["categorias"][] = $categoria;
+			}
+
+			$related['imagens'] = VolumeImagem::where('id_volume', [$volume["id"]])->get();
+
+
+
 			$volumesDados = array_merge($volume->toArray(), $related);
 			return $this->parseResponse($res, $volumesDados);
 		}
