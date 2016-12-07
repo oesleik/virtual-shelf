@@ -20,12 +20,19 @@ class Volumes extends Services {
 
 	public function get($req, $res) {
 		$id = $req->getAttribute("id");
+		
+
+		$related = array();
 		$volume = Volume::find($id);
 
 		if ($volume === null) {
 			return $this->parseResponse($res, "Volume não encontrado", self::ERROR);
 		} else {
-			return $this->parseResponse($res, $volume);
+			$related['editora'] = Editora::find($volume['id_editora']);
+			//$realted['autor'] = 
+		
+			$volumesDados = array_merge($volume->toArray(), $related);
+			return $this->parseResponse($res, $volumesDados);
 		}
 	}
 
