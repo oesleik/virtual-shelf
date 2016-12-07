@@ -24,31 +24,38 @@ class Volumes extends Services {
 
 		$related = array();
 		$volume = Volume::find($id);
+		$related["editora"] = array();
+		$related["autores"] = array();
+		$related["categorias"] = array();
+		$related["imagens"] = array();
 
 		if ($volume === null) {
 			return $this->parseResponse($res, "Volume não encontrado", self::ERROR);
 		} else {
 			$related['editora'] = Editora::find($volume['id_editora']);
 
-			$vaolumeDados = VolumeAutor::where('id_volume', [$volume["id"]])->get();
+			$volumeDados = VolumeAutor::where('id_volume', $volume["id"])->get();
 			
-			foreach ($vaolumeDados as $nome) {
-				$autor = Autor::where('id', [$nome["id_autor"]])
-                    ->get();
-				$related["autores"][] = $autor;
+			foreach ($volumeDados as $nome) {
+				$autor = Autor::find($nome["id_autor"]);
+				$related["autores"] []= $autor;
 			}
 
 
-			$categoriaDados = VolumeCategoria::where('id_volume', [$volume["id"]])->get();
+			$categoriaDados = VolumeCategoria::where('id_volume', $volume["id"])->get();
 			
+
 			foreach ($categoriaDados as $dado) {
-				$categoria = Categoria::where('id', [$dado["id_categoria"]])
-                    ->get();
+				$categoria = Categoria::find($dado["id_categoria"]);
 				$related["categorias"][] = $categoria;
 			}
 
-			$related['imagens'] = VolumeImagem::where('id_volume', [$volume["id"]])->get();
+			$consultaImagem = VolumeImagem::where('id_volume', [$volume["id"]])->get(); 
 
+			foreach ($consultaImagem as $dado) {
+				$imagem = VolumeImagem::find($dado['id']);
+				$related["imagens"][$imagem['tamanho']] = $imagem;
+			}
 
 
 			$volumesDados = array_merge($volume->toArray(), $related);
