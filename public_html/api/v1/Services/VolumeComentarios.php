@@ -7,7 +7,8 @@ use Models\VolumeComentario;
 class VolumeComentarios extends Services {
 
 	public function getAll($req, $res) {
-		$volumesComentarios = VolumeComentario::all();
+		$id = $req->getAttribute("id_volume");
+		$volumesComentarios = VolumeComentario::where('id_volume', $id)->get();
 		return $this->parseResponse($res, $volumesComentarios);
 	}
 
