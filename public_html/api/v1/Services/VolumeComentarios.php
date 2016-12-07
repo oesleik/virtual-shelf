@@ -23,8 +23,13 @@ class VolumeComentarios extends Services {
 	}
 
 	public function add($req, $res) {
+		$id_volume = $req->getAttribute("id_volume");
+		$id_usuario = $req->getAttribute("id_usuario");
 		$dados = $this->parseRequestBody($req);
-		$volumeComentario = VolumeComentario::create($dados);
+		$dados["id_volume"]=$id_volume;
+		$dados["id_usuario"]=$id_usuario;
+
+		$volumeComentario = VolumeComentario::Create($dados);
 		return $this->parseResponse($res, $volumeComentario);
 	}
 
