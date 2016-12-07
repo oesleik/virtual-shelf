@@ -32,7 +32,6 @@ class Prateleiras extends Services {
 
 		$prateleira = Prateleira::firstOrCreate($dados);
 		
-
 		return $this->parseResponse($res, $prateleira);
 
 	}
@@ -56,8 +55,7 @@ class Prateleiras extends Services {
 		//exclui os livros relacionados na table PrateleiraVolume
 		$vinculados = PrateleiraVolume::where("id_prateleira","=", $dados["id_prateleira"])->delete();
 
-		$registro = Prateleira::where("id","=", $dados["id_prateleira"],"and","id_usuario","=", $dados["id_usuario"])->delete();
-
+		$registro = Prateleira::where("id", $dados["id_prateleira"])->where("id_usuario", $dados["id_usuario"])->delete();
 	
 		return $this->parseResponse($res, $registro);
 
@@ -84,8 +82,7 @@ class Prateleiras extends Services {
 					return $this->parseResponse($res, "Este volume não existe", self::ERROR);
 				}else{
 
-					$registro = PrateleiraVolume::where("id_volume","=", $dados["id_volume"],"and","id_prateleira","=", $dados["id_prateleira"])->delete();
-
+					$registro = PrateleiraVolume::where("id_volume", $dados["id_volume"])->where("id_prateleira", $dados["id_prateleira"])->delete();
 					return $this->parseResponse($res, $registro);
 				}
 
