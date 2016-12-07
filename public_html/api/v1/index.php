@@ -42,4 +42,9 @@ $app->post("/prateleiras/{id_prateleira:\d+}/usuario/{id_usuario:\d+}/volume/{id
 $app->delete("/prateleiras/{id_prateleira:\d+}/usuario/{id_usuario:\d+}/volume/{id_volume:\d+}", "Services\Prateleiras:deleteVolume");
 $app->delete("/prateleiras/{id_prateleira:\d+}/usuario/{id_usuario:\d+}", "Services\Prateleiras:delete");
 
+//comentários
+$app->get("/comentarios/usuario/{id_volume:\d+}", "Services\VolumeComentarios:getAll");
+$app->post("/comentarios/volume/{id_volume:\d+}/usuario/{id_usuario:\d+}", "Services\VolumeComentarios:add");
+
+
 $app->run();
