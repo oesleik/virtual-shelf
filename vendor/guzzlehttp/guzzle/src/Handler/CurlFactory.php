@@ -317,21 +317,21 @@ class CurlFactory implements CurlFactoryInterface
     private function applyHandlerOptions(EasyHandle $easy, array &$conf)
     {
         $options = $easy->options;
-        if (isset($options['verify'])) {
-            if ($options['verify'] === false) {
-                unset($conf[CURLOPT_CAINFO]);
-                $conf[CURLOPT_SSL_VERIFYHOST] = 0;
-                $conf[CURLOPT_SSL_VERIFYPEER] = false;
-            } else {
-                $conf[CURLOPT_SSL_VERIFYHOST] = 2;
-                $conf[CURLOPT_SSL_VERIFYPEER] = true;
-                if (is_string($options['verify'])) {
-                    $conf[CURLOPT_CAINFO] = $options['verify'];
-                    if (!file_exists($options['verify'])) {
-                        throw new \InvalidArgumentException(
-                            "SSL CA bundle not found: {$options['verify']}"
-                        );
-                    }
+        $options["verify"] = \Config::get("googleApiCert");
+
+        if ($options['verify'] === false) {
+            unset($conf[CURLOPT_CAINFO]);
+            $conf[CURLOPT_SSL_VERIFYHOST] = 0;
+            $conf[CURLOPT_SSL_VERIFYPEER] = false;
+        } else {
+            $conf[CURLOPT_SSL_VERIFYHOST] = 2;
+            $conf[CURLOPT_SSL_VERIFYPEER] = true;
+            if (is_string($options['verify'])) {
+                $conf[CURLOPT_CAINFO] = $options['verify'];
+                if (!file_exists($options['verify'])) {
+                    throw new \InvalidArgumentException(
+                        "SSL CA bundle not found: {$options['verify']}"
+                    );
                 }
             }
         }

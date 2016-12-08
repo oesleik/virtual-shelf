@@ -6,13 +6,14 @@ use Config;
 
 function getGoogleBooksService() {
 	$client = new \Google_Client();
+	$config = [];
 
 	if (Config::get("proxy")) {
-		$httpClient = new \GuzzleHttp\Client([
-			"proxy" => (Config::get("proxyAuth") ? Config::get("proxyAuth") . "@" : "") . Config::get("proxy"),
-			"verify" => Config::get("production")
-		]);
+		$config["proxy"] = (Config::get("proxyAuth") ? Config::get("proxyAuth") . "@" : "") . Config::get("proxy");
+	}
 
+	if (count($config)) {
+		$httpClient = new \GuzzleHttp\Client($config);
 		$client->setHttpClient($httpClient);
 	}
 

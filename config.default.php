@@ -9,6 +9,7 @@ Config::set("rootApi", Config::get("root") . "public_html/api/v1/");
 
 Config::set("googleAppName", "");
 Config::set("googleApiKey", "");
+Config::set("googleApiCert", false);
 
 Config::set("proxy", false);
 Config::set("proxyAuth", false);
