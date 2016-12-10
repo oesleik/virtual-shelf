@@ -5,13 +5,18 @@
 
 		connectedCallback() {
 			this.volumeId = this.getAttribute("volumeId");
+			this.classList.add("loading");
 			this.exibirEstrelas();
 
-			api.get(`/volumes/${this.volumeId}/usuario/${auth.getUser().id}/avaliacao`).then((avaliacao) => {
-				if (avaliacao > 0) {
-					this.exibirEstrelas(avaliacao);
-				}
-			});
+			api.get(`/volumes/${this.volumeId}/usuario/${auth.getUser().id}/avaliacao`)
+				.then((avaliacao) => {
+					if (avaliacao > 0) {
+						this.exibirEstrelas(avaliacao);
+					}
+				}, () => null)
+				.then(() => {
+					this.classList.remove("loading");
+				});
 		}
 
 		exibirEstrelas(avaliacao = 0) {
@@ -40,7 +45,11 @@
 
 	restyle({
 		"volume-avaliacao": {
-			"display": "inline-block"
+			"display": "inline-block",
+			"transition": "opacity 0.2s"
+		},
+		"volume-avaliacao.loading": {
+			"opacity": "0"
 		}
 	}, []);
 

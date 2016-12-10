@@ -14,11 +14,7 @@
 					<div class="secondary">
 						<div class="status">Lido <i class="material-icons">arrow_drop_down</i></div>
 						<div class="rating">
-							<i class="material-icons">star</i>
-							<i class="material-icons">star</i>
-							<i class="material-icons">star</i>
-							<i class="material-icons">star</i>
-							<i class="material-icons">star</i>
+							<volume-avaliacao volumeId="${this.volume.id}"></volume-avaliacao>
 						</div>
 					</div>
 					<div class="clearfix"></div>`

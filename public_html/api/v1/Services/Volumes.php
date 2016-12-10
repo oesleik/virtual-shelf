@@ -108,13 +108,12 @@ class Volumes extends Services {
 		]);
 		$related["editora"] = $editora;
 
-		$volume = Volume::firstOrCreate([
+		$volume = Volume::updateOrCreate(["id_google" => $item["id"]], [
 			"titulo" => $info["title"],
 			"isbn" => isset($info["industryIdentifiers"][0]["identifier"]) ? $info["industryIdentifiers"][0]["identifier"] : "",
 			"paginas" => $info["pageCount"],
 			"linguagem" => $info["language"],
 			"dataPublicacao" => $info["publishedDate"],
-			"id_google" => $item["id"],
 			"id_editora" => $editora->id
 		]);
 
@@ -146,17 +145,19 @@ class Volumes extends Services {
 
 		$related["imagens"] = array();
 		if ($info["imageLinks"]["thumbnail"]) {
-			$imagem = VolumeImagem::firstOrCreate([
+			$imagem = VolumeImagem::updateOrCreate([
 				"id_volume" => $volume->id,
-				"tamanho" => VolumeImagem::TAMANHO_THUMB,
+				"tamanho" => VolumeImagem::TAMANHO_THUMB
+			], [
 				"caminho" => $info["imageLinks"]["thumbnail"]
 			]);
 			$related["imagens"][VolumeImagem::TAMANHO_THUMB] = $imagem;
 		}
 		if ($info["imageLinks"]["smallThumbnail"]) {
-			$imagem = VolumeImagem::firstOrCreate([
+			$imagem = VolumeImagem::updateOrCreate([
 				"id_volume" => $volume->id,
-				"tamanho" => VolumeImagem::TAMANHO_THUMB_SM,
+				"tamanho" => VolumeImagem::TAMANHO_THUMB_SM
+			], [
 				"caminho" => $info["imageLinks"]["smallThumbnail"]
 			]);
 			$related["imagens"][VolumeImagem::TAMANHO_THUMB_SM] = $imagem;
