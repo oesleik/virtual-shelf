@@ -25,13 +25,9 @@ class Prateleiras extends Services {
 	}
 
 	public function add($req, $res) {
-
-		$id = $req->getAttribute("id_usuario");
 		$dados = $this->parseRequestBody($req);
-		$dados["id_usuario"]=$id;
-
-		$prateleira = Prateleira::firstOrCreate($dados);
-		
+		$dados["id_usuario"] = $req->getAttribute("id_usuario");
+		$prateleira = Prateleira::create($dados);
 		return $this->parseResponse($res, $prateleira);
 
 	}

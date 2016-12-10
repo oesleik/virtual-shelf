@@ -21,6 +21,8 @@
             <app-route path="/pesquisar-livros" element="page-pesquisar-livros"></app-route>
             <app-route path="/configuracoes" element="page-configuracoes"></app-route>
             <app-route path="/volume/:id" element="page-volume"></app-route>
+            <app-route path="/prateleiras/add" element="page-edicao-prateleira" teste="jkfd"></app-route>
+            <app-route path="/prateleiras/edit/:id" element="page-edicao-prateleira"></app-route>
             <app-route path="*" redirect="/home"></app-route>
         </app-router>
 
@@ -50,6 +52,7 @@
         <script src="js/elements/pages/pesquisar-livros.js"></script>
         <script src="js/elements/pages/configuracoes.js"></script>
         <script src="js/elements/pages/volume.js"></script>
+        <script src="js/elements/pages/edicao-prateleira.js"></script>
 
         <script src="js/elements/button-social-login.js"></script>
         <script src="js/elements/lista-volumes.js"></script>
