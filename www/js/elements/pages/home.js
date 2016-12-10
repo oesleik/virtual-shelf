@@ -1,9 +1,14 @@
-(function(pages, customElements, innerHTML, app) {
+(function(pages, customElements, innerHTML, app, auth) {
 	"use strict";
 
 	pages.PageHome = class extends pages.PageMain {
 
 		connectedCallback() {
+			if (auth.isGuest()) {
+				app.goTo("login");
+				return;
+			}
+
 			super.connectedCallback();
 
 			innerHTML(this.querySelector("#page-tabs"), `
@@ -38,4 +43,4 @@
 
 	customElements.define("page-home", pages.PageHome);
 
-}( window.pages, window.customElements, window.innerHTML, window.app ));
+}( window.pages, window.customElements, window.innerHTML, window.app, window.auth ));

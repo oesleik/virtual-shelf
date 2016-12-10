@@ -16,8 +16,7 @@ var app = {
 
     onDeviceReady() {
         this.prepareEnv();
-
-        this.goTo("home");
+        this.goTo(auth.isUser() ? "home" : "login");
         document.querySelector("app-router").init();
     },
 
@@ -34,6 +33,11 @@ var app = {
     atualizarComponentes(elementos) {
         // executa no próximo frame para garantir que o elemento já esteja no DOM
         setTimeout(() => { window.componentHandler.upgradeElements(elementos); }, 0);
+    },
+
+    logout() {
+        auth.setUser(null);
+        this.goTo("login");
     }
 
 };

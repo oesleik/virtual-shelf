@@ -79,7 +79,7 @@
 						${""/*<a class="mdl-navigation__link" href="#/prateleira/{id}">Próximos <i class="material-icons">bookmark_border</i></a>*/}
 						<a class="mdl-navigation__link mdl-menu__item--full-bleed-divider" href="#/adicionar-prateleira">Nova prateleira <i class="material-icons">library_add</i></a>
 						<a class="mdl-navigation__link" href="#/configuracoes">Configurações <i class="material-icons">settings</i></a>
-						<a class="mdl-navigation__link" href="#/logout">Sair <i class="material-icons">exit_to_app</i></a>
+						<a class="mdl-navigation__link" href="#" onclick="app.logout(); return false;">Sair <i class="material-icons">exit_to_app</i></a>
 					</nav>
 				</div>`;
 	}
