@@ -44,3 +44,7 @@ body {
 .form-full-width .actions {
 	margin-top: 15px;
 }
+
+.mdl-textfield-checkbox {
+	padding-top: 5px;
+}

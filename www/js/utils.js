@@ -20,10 +20,17 @@ var utils = {
 		var obj = {};
 
 		for (var i = 0; i < elements.length; i++) {
-			var item = elements.item(i);
+			var element = elements.item(i);
+			var tagName = element && element.name.length ? element.tagName : "";
 
-			if (item.name.length) {
-				obj[item.name] = item.value;
+			if (tagName.length) {
+				var type = tagName === "INPUT" ? element.getAttribute("type") : "";
+
+				if (["checkbox", "radio"].indexOf(type) >= 0) {
+					obj[element.name] = element.checked;
+				} else {
+					obj[element.name] = element.value;
+				}
 			}
 		}
 
@@ -36,9 +43,16 @@ var utils = {
 
 		for (var id in data) {
 			element = form.querySelector("#" + id);
+			var tagName = element && element.name.length ? element.tagName : "";
 
-			if (element && ["INPUT", "SELECT"].indexOf(element.tagName) >= 0) {
-				element.value = data[id];
+			if (tagName.length) {
+				var type = tagName === "INPUT" ? element.getAttribute("type") : "";
+
+				if (["checkbox", "radio"].indexOf(type) >= 0) {
+					element.checked = !!data[id];
+				} else {
+					element.value = data[id];
+				}
 			}
 		}
 	},

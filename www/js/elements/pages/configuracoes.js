@@ -26,6 +26,12 @@
 						<input class="mdl-textfield__input" type="text" name="email" id="email">
 						<label class="mdl-textfield__label" for="email">Email</label>
 					</div>
+					<div class="mdl-textfield mdl-textfield-checkbox">
+						<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="exibir_email">
+						  <input type="checkbox" id="exibir_email" name="exibir_email" class="mdl-checkbox__input">
+						  <span class="mdl-checkbox__label">Exibir email</span>
+						</label>
+					</div>
 					<div class="actions">
 						<button type="button" id="btn-salvar" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">Salvar</button>
 						<button type="button" id="btn-cancelar" class="mdl-button mdl-js-button mdl-js-ripple-effect">Cancelar</button>
