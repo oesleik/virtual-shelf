@@ -35,13 +35,20 @@ class VolumeComentarios extends Services {
 	}
 
 	public function edit($req, $res) {
-		$id = $req->getAttribute("id");
+		$id_comentario = $req->getAttribute("id_comentario");
+		$id_usuario = $req->getAttribute("id_usuario");
 		$dados = $this->parseRequestBody($req);
+		$comentario = VolumeComentario::find($id_comentario);
+		
+		if($comentario['id_usuario'] == $id_usuario){
+			VolumeComentario::where("id", $id_comentario)->update($dados);
+			$comentarioAtualizado = VolumeComentario::find($id_comentario);
+			return $this->parseResponse($res, $comentarioAtualizado);
+		}
+		else{
+			return $this->parseResponse($res, "Comentário de volume não atualizado", self::ERROR);
+		}
 
-		VolumeComentario::where("id", $id)->update($dados);
-		$volumeComentario = VolumeComentario::find($id);
-
-		return $this->parseResponse($res, $volumeComentario);
 	}
 
 	public function delete($req, $res) {
