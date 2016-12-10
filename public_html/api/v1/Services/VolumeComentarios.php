@@ -52,9 +52,17 @@ class VolumeComentarios extends Services {
 	}
 
 	public function delete($req, $res) {
-		$id = $req->getAttribute("id");
-		$deleted = (bool) VolumeComentario::destroy($id);
-		return $this->parseResponse($res, $deleted);
-	}
+		$id_comentario = $req->getAttribute("id_comentario");
+		$id_usuario = $req->getAttribute("id_usuario");
 
+		$comentario = VolumeComentario::find($id_comentario);
+
+		if($comentario['id_usuario'] == $id_usuario){
+			$deleted = (bool) VolumeComentario::destroy($id_comentario);
+			return $this->parseResponse($res, $deleted);
+		}
+		else{
+			return $this->parseResponse($res, "Comentário não é deste usuário", self::ERROR);
+		}
+	}
 }
