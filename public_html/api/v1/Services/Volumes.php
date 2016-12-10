@@ -167,7 +167,11 @@ class Volumes extends Services {
 	}
 
 	public function getSituacaoVolumeUsuario($req, $res) {
+		$rows = VolumeUsuario::where("id_volume", $req->getAttribute("id"))
+							 ->where("id_usuario", $req->getAttribute("id_usuario"))
+							 ->get();
 
+		return $this->parseResponse($res, count($rows) ? $rows[0]->situacao : "Não lido");
 	}
 
 	public function atualizarSituacaoVolumeUsuario($req, $res) {

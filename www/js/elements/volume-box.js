@@ -12,7 +12,9 @@
 					<h4 class="js-exibir-volume">${this.volume.titulo}</h4>
 					<h5>${this.volume.autores.map((autor) => autor.nome).join(", ")}</h5>
 					<div class="secondary">
-						<div class="status">Lido <i class="material-icons">arrow_drop_down</i></div>
+						<div class="status">
+							<volume-situacao volumeId="${this.volume.id}"></volume-situacao>
+						</div>
 						<div class="rating">
 							<volume-avaliacao volumeId="${this.volume.id}"></volume-avaliacao>
 						</div>

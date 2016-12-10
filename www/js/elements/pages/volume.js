@@ -41,13 +41,9 @@
 						<h3>${volume.titulo}</h3>
 						<h4>${volume.autores.map((autor) => autor.nome).join(", ")}</h4>
 						<div class="secondary">
-							<div class="status" id="btn-select-situacao">
-								Lido <i class="material-icons">arrow_drop_down</i>
+							<div class="status">
+								<volume-situacao volumeId="${volume.id}"></volume-situacao>
 							</div>
-							<ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="btn-select-situacao">
-								<li class="mdl-menu__item btn-alterar-situacao" situacao="Lendo">Lendo</li>
-								<li class="mdl-menu__item btn-alterar-situacao" situacao="Lido">Lido</li>
-							</ul>
 							<div class="rating">
 								<volume-avaliacao volumeId="${volume.id}"></volume-avaliacao>
 							</div>
@@ -99,15 +95,11 @@
 					"line-height": "18px",
 					"color": "#999"
 				},
-				".volume .status": {
-					"font-size": "15px",
-					"color": "#666"
-				},
-				".volume .status i": {
-					"vertical-align": "bottom"
+				".volume .rating": {
+					"margin-top": "5px"
 				},
 				".volume .shop": {
-					"margin": "20px 0 0",
+					"margin": "30px 0 0",
 					"display": "table",
 					"width": "100%"
 				},
