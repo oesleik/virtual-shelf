@@ -20,7 +20,9 @@ $app->get("/volumes", "Services\Volumes:getAll");
 $app->get("/volumes/{id:\d+}", "Services\Volumes:get");
 $app->get("/volumes/pesquisa/{pesquisa}", "Services\Volumes:getPesquisa");
 $app->post("/volumes", "Services\Volumes:add");
+$app->get("/volumes/{id:\d+}/usuario/{id_usuario:\d+}/situacao", "Services\Volumes:getSituacaoVolumeUsuario");
 $app->put("/volumes/{id:\d+}/usuario/{id_usuario:\d+}/situacao/{situacao}", "Services\Volumes:atualizarSituacaoVolumeUsuario");
+$app->get("/volumes/{id:\d+}/usuario/{id_usuario:\d+}/avaliacao", "Services\Volumes:getAvaliacaoVolumeUsuario");
 $app->put("/volumes/{id:\d+}/usuario/{id_usuario:\d+}/avaliacao/{avaliacao}", "Services\Volumes:atualizarAvaliacaoVolumeUsuario");
 
 // Login
@@ -46,7 +48,7 @@ $app->delete("/prateleiras/{id_prateleira:\d+}/usuario/{id_usuario:\d+}", "Servi
 $app->get("/comentarios/volume/{id_volume:\d+}", "Services\VolumeComentarios:getAll");
 $app->post("/comentarios/volume/{id_volume:\d+}/usuario/{id_usuario:\d+}", "Services\VolumeComentarios:add");
 $app->put("/comentarios/{id_comentario:\d+}/usuario/{id_usuario:\d+}", "Services\VolumeComentarios:edit");
-$app->post("/comentarios/{id_comentario:\d+}/usuario/{id_usuario:\d+}/moderacao/{status}", "Services\VolumeComentarios:addStatusModeracao");
+$app->put("/comentarios/{id_comentario:\d+}/usuario/{id_usuario:\d+}/moderacao/{status}", "Services\VolumeComentarios:addStatusModeracao");
 $app->delete("/comentarios/{id_comentario:\d+}/usuario/{id_usuario:\d+}/moderacao/{status}", "Services\VolumeComentarios:deleteStatusModeracao");
 
 

@@ -165,6 +165,9 @@ class Volumes extends Services {
 		return array_merge($volume->toArray(), $related);
 	}
 
+	public function getSituacaoVolumeUsuario($req, $res) {
+
+	}
 
 	public function atualizarSituacaoVolumeUsuario($req, $res) {
 
@@ -175,6 +178,14 @@ class Volumes extends Services {
 
 		return $this->parseResponse($res, $volumeUsuario);
 
+	}
+
+	public function getAvaliacaoVolumeUsuario($req, $res) {
+		$rows = VolumeUsuario::where("id_volume", $req->getAttribute("id"))
+							 ->where("id_usuario", $req->getAttribute("id_usuario"))
+							 ->get();
+
+		return $this->parseResponse($res, count($rows) ? $rows[0]->avaliacao : 0);
 	}
 
 	public function atualizarAvaliacaoVolumeUsuario($req, $res) {

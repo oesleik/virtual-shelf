@@ -49,11 +49,7 @@
 								<li class="mdl-menu__item btn-alterar-situacao" situacao="Lido">Lido</li>
 							</ul>
 							<div class="rating">
-								<i class="material-icons">star</i>
-								<i class="material-icons">star</i>
-								<i class="material-icons">star</i>
-								<i class="material-icons">star</i>
-								<i class="material-icons">star</i>
+								<volume-avaliacao volumeId="${volume.id}"></volume-avaliacao>
 							</div>
 							<div class="shop">
 								${lojas.map((loja) =>
