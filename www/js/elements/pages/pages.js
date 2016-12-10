@@ -74,8 +74,12 @@
 		return `<div class="mdl-layout__drawer">
 					<span class="mdl-layout-title">Virtual Shelf</span>
 					<nav class="mdl-navigation">
-						<a class="mdl-navigation__link" href="#/pesquisar-livros">Pesquisar livros <i class="material-icons">search</i></a>
+						<a class="mdl-navigation__link" href="#/pesquisar-livros">Pesquisar <i class="material-icons">search</i></a>
+						<a class="mdl-navigation__link" href="#/prateleira/{id}">Favoritos <i class="material-icons">star_border</i></a>
+						${""/*<a class="mdl-navigation__link" href="#/prateleira/{id}">Próximos <i class="material-icons">bookmark_border</i></a>*/}
+						<a class="mdl-navigation__link mdl-menu__item--full-bleed-divider" href="#/adicionar-prateleira">Nova prateleira <i class="material-icons">library_add</i></a>
 						<a class="mdl-navigation__link" href="#/configuracoes">Configurações <i class="material-icons">settings</i></a>
+						<a class="mdl-navigation__link" href="#/logout">Sair <i class="material-icons">exit_to_app</i></a>
 					</nav>
 				</div>`;
 	}

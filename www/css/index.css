@@ -28,8 +28,9 @@ body {
 }
 
 .mdl-layout__drawer .mdl-navigation__link i {
-	float: right;
+	float: left;
 	color: #666;
+	margin-right: 10px;
 }
 
 .form-full-width {
