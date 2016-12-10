@@ -21,25 +21,25 @@
 
 				var lojas = [{
 					"provider": "amazon",
-					"providerImage": "",
+					"providerImage": "img/amazon-icon.png",
 					"search": `https://www.amazon.com/gp/search/ref=sr_adv_b/?search-alias=stripbooks&unfiltered=1&field-keywords=&field-author=&field-title=&field-isbn=${volume.isbn}&field-publisher=&node=&field-p_n_condition-type=&p_n_feature_browse-bin=&field-age_range=&field-language=&field-dateop=During&field-datemod=&field-dateyear=&sort=relevanceexprank&Adv-Srch-Books-Submit.x=32&Adv-Srch-Books-Submit.y=14`,
 				}, {
 					"provider": "submarino",
-					"providerImage": "",
+					"providerImage": "img/submarino-icon.png",
 					"search": `http://www.submarino.com.br/portal/ResultadoBuscaAvancadaLivros/309573/?isbn=${volume.isbn}`,
 				}, {
 					"provider": "saraiva",
-					"providerImage": "",
+					"providerImage": "img/saraiva-icon.png",
 					"search": `http://www.editorasaraiva.com.br/produtos/?tipoBusca=3&tipoMidia=0&query=${volume.isbn}&catalogoNovidades=&area=&subarea=&disciplina=&nivelEnsino=&seloEditorial=&dataComemorativa=&temaTransversal=&tituloIndicado=`
 				}];
 
 				innerHTML(this.querySelector("#scroll-tab-1"), `
 					<div class="volume">
 						<div class="volume-imagem">
-							<img src="${!!volume.imagens && volume.imagens.thumb}" />
+							<img src="${volume.imagens.thumb.caminho}" />
 						</div>
 						<h3>${volume.titulo}</h3>
-						<h4>${!!volume.autores && volume.autores.map((autor) => autor.nome).join(", ")}</h4>
+						<h4>${volume.autores.map((autor) => autor.nome).join(", ")}</h4>
 						<div class="secondary">
 							<div class="status" id="btn-select-situacao">
 								Lido <i class="material-icons">arrow_drop_down</i>
@@ -56,6 +56,11 @@
 								<i class="material-icons">star</i>
 							</div>
 							<div class="shop">
+								${lojas.map((loja) =>
+									`<div>
+										<img src="${loja.providerImage}" alt="${loja.provider}" onclick="window.open('${loja.search}');" />
+									</div>`
+								).join("")}
 							</div>
 						</div>
 					</div>`);
@@ -86,7 +91,7 @@
 				".volume h3": {
 					"display": "block",
 					"padding": "0",
-					"margin": "10px 0 5px",
+					"margin": "20px 0 5px",
 					"font-size": "22px",
 					"line-height": "22px"
 				},
@@ -104,6 +109,20 @@
 				},
 				".volume .status i": {
 					"vertical-align": "bottom"
+				},
+				".volume .shop": {
+					"margin": "20px 0 0",
+					"display": "table",
+					"width": "100%"
+				},
+				".volume .shop div": {
+					"padding": "0 5px",
+					"display": "table-cell",
+					"text-align": "center"
+				},
+				".volume .shop img": {
+					"padding": "3px 10px",
+					"height": "25px"
 				}
 			}, []);
 		}
