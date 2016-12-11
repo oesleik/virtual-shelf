@@ -19,7 +19,7 @@ var app = {
 
         if (auth.isUser()) {
             this.carregarPrateleiras();
-            this.goTo("home");
+            this.goTo("pesquisar-livros");
         } else {
             this.goTo("login");
         }
