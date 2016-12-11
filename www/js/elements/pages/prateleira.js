@@ -30,7 +30,38 @@
 				innerHTML(target, "<erro-listagem></erro-listagem>");
 			});
 
+			innerHTML(this.querySelector("#page-header-actions"), `
+				<button class="mdl-navigation__link mdl-button mdl-js-button mdl-button--icon" id="menu-acoes-header">
+				  <i class="material-icons">more_vert</i>
+				</button>
+				<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="menu-acoes-header">
+					<li class="mdl-menu__item" id="acao-editar">Editar</li>
+					<li class="mdl-menu__item" id="acao-remover">Remover</li>
+				</ul>`
+			);
+
+			this.querySelector("#acao-editar").addEventListener("click", this.editar.bind(this), false);
+			this.querySelector("#acao-remover").addEventListener('click', this.remover.bind(this), false);
+
 			app.atualizarComponentes(this);
+		}
+
+		editar() {
+			app.goTo(`prateleiras/edit/${this.prateleiraId}`);
+		}
+
+		remover() {
+			if (confirm("Confirma a remoção desta prateleira?")) {
+				api.delete(`/prateleiras/${this.prateleiraId}/usuario/${auth.getUser().id}`);
+
+				storePrateleiras.forEach((prateleira, idx) => {
+					if (prateleira.id == this.prateleiraId) {
+						storePrateleiras.splice(idx, 1);
+						document.querySelector("body").dispatchEvent(new CustomEvent("refreshedShelves", { detail: storePrateleiras }));
+						app.goTo("home");
+					}
+				});
+			}
 		}
 
 	};

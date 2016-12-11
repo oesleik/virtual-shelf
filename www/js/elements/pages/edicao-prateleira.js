@@ -43,8 +43,16 @@
 			var prateleira = utils.getFormValues("prateleira");
 
 			if (this.isEdicao) {
+				api.edit(`/prateleiras/${this.prateleiraId}/usuario/${auth.getUser().id}`, prateleira).then((response) => {
+					storePrateleiras.forEach((prateleira, idx) => {
+						if (prateleira.id == response.id) {
+							storePrateleiras[idx] = response;
+							this.acessarPrateleira(response.id);
+						}
+					});
+				});
 			} else {
-				api.add("/prateleiras/usuario/" + auth.getUser().id, prateleira).then((prateleira) => {
+				api.add(`/prateleiras/usuario/${auth.getUser().id}`, prateleira).then((prateleira) => {
 					storePrateleiras.push(prateleira);
 					this.acessarPrateleira(prateleira.id);
 				});
@@ -57,12 +65,24 @@
 		}
 
 		cancelar() {
-			app.goTo("home");
+			app.goTo(this.isEdicao ? "prateleiras/" + this.prateleiraId : "home");
 		}
 
 		obterDados() {
-			utils.fillFormValues("prateleira", auth.getUser());
-			app.atualizarComponentes(this);
+			this.prateleira = null;
+
+			storePrateleiras.forEach((prateleira) => {
+				if (prateleira.id == this.prateleiraId) {
+					this.prateleira = prateleira;
+				}
+			});
+
+			if (this.prateleira === null) {
+				app.goTo("home");
+			} else {
+				utils.fillFormValues("prateleira", this.prateleira);
+				app.atualizarComponentes(this);
+			}
 		}
 
 	};

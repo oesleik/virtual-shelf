@@ -36,6 +36,7 @@ class Prateleiras extends Services {
 	public function edit($req, $res) {
 		$id = $req->getAttribute("id");
 		$dados = $this->parseRequestBody($req);
+		$dados["id_usuario"] = $req->getAttribute("id_usuario");
 
 		Prateleira::where("id", $id)->update($dados);
 		$prateleira = Prateleira::find($id);
@@ -44,20 +45,10 @@ class Prateleiras extends Services {
 	}
 
 	public function delete($req, $res) {
-		$dados = $this->parseRequestBody($req);
-		$dados["id_prateleira"]= $req->getAttribute("id_prateleira");
-		$dados["id_usuario"]= $req->getAttribute("id_usuario");
-		
-		//exclui os livros relacionados na table PrateleiraVolume
-		$vinculados = PrateleiraVolume::where("id_prateleira","=", $dados["id_prateleira"])->delete();
-
-		$registro = Prateleira::where("id", $dados["id_prateleira"])->where("id_usuario", $dados["id_usuario"])->delete();
-	
-		return $this->parseResponse($res, $registro);
-
-
-		$deleted = (bool) Volume::destroy($id);
-		return $this->parseResponse($res, $deleted);
+		$idPrateleira= $req->getAttribute("id_prateleira");
+		$idUsuario= $req->getAttribute("id_usuario");
+		PrateleiraVolume::where("id_prateleira", $idPrateleira)->delete();
+		Prateleira::where("id", $idPrateleira)->where("id_usuario", $idUsuario)->delete();
 	}
 
 	public function deleteVolume($req, $res) {
