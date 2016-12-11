@@ -152,7 +152,7 @@
 				"#comentarios .mdl-list__item-secondary-content a": {
 					"display": "block"
 				},
-				"#comentarios .mdl-list__item-secondary-content a:not(.avaliacao-positiva) i": {
+				"#comentarios .acao-avaliar-comentario:not(.avaliacao-positiva) i": {
 					"color": "#999"
 				}
 			}, []);
@@ -179,7 +179,7 @@
 			innerHTML(this.querySelector("#comentarios"), "<carregando-conteudo></carregando-conteudo>");
 			app.atualizarComponentes(this);
 
-			api.get("/comentarios/volume/" + this.volume.id)
+			api.get(`/comentarios/volume/${this.volume.id}/usuario/${auth.getUser().id}`)
 				.then((comentarios) => {
 					console.log(comentarios);
 					var lista = comentarios.map((response) => {
@@ -200,8 +200,8 @@
 										</span>
 									</span>
 									<span class="mdl-list__item-secondary-content">
-										<a class="mdl-list__item-secondary-action" href="#"><i class="material-icons">thumb_up</i></a>
-										${response.aprovacoes}
+										<a class="mdl-list__item-secondary-action acao-avaliar-comentario ${response.aprovado ? "avaliacao-positiva" : ""}" href="#" comentarioId="${response.id}" onclick="return false;"><i class="material-icons">thumb_up</i></a>
+										<span class="numero-avaliacoes-positivas">${response.aprovacoes}</span>
 									</span>
 								</li>`;
 					}).join("");
@@ -217,6 +217,12 @@
 
 					app.atualizarComponentes(this);
 					this.querySelector("#acao-incluir-comentario").addEventListener("click", this.exibirFormComentario.bind(this, 0, 0), false);
+
+					Array.from(this.querySelectorAll(".acao-avaliar-comentario")).forEach((element) => {
+						element.addEventListener("click", () => {
+							this.avaliarComentario(element.getAttribute("comentarioId"), !element.classList.contains("avaliacao-positiva"));
+						}, false);
+					});
 
 					Array.from(this.querySelectorAll(".acao-editar-comentario")).forEach((element) => {
 						element.addEventListener("click", this.exibirFormComentario.bind(this, element.getAttribute("comentarioId"), 0), false);
@@ -292,6 +298,20 @@
 				innerHTML(this.querySelector("#comentarios"), "<carregando-conteudo></carregando-conteudo>");
 				app.atualizarComponentes(this);
 				api.delete(`/comentarios/${comentarioId}/usuario/${auth.getUser().id}`).then(null, () => null).then(this.carregarComentarios.bind(this));
+			}
+		}
+
+		avaliarComentario(comentarioId, aprovacao) {
+			api.edit(`/comentarios/${comentarioId}/usuario/${auth.getUser().id}/aprovacao/${aprovacao ? 1 : 0}`);
+			var indicadorAprovacao = this.querySelector(`.acao-avaliar-comentario[comentarioId="${comentarioId}"]`);
+			var indicadorNroAprovados = indicadorAprovacao.parentNode.querySelector(".numero-avaliacoes-positivas");
+
+			if (aprovacao) {
+				indicadorAprovacao.classList.add("avaliacao-positiva");
+				indicadorNroAprovados.innerHTML = parseInt(indicadorNroAprovados.innerHTML) + 1;
+			} else {
+				indicadorAprovacao.classList.remove("avaliacao-positiva");
+				indicadorNroAprovados.innerHTML = parseInt(indicadorNroAprovados.innerHTML) - 1;
 			}
 		}
 
