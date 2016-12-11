@@ -5,6 +5,7 @@ namespace Services;
 use Models\VolumeComentario;
 use Models\Usuario;
 use Models\ComentarioAprovacao;
+use Models\ComentarioModeracao;
 
 class VolumeComentarios extends Services {
 
@@ -76,7 +77,17 @@ class VolumeComentarios extends Services {
 			"id_comentario" => $idComentario,
 			"id_usuario" => $idUsuario
 		], ["aprovacao" => $aprovacao]);
+	}
 
-		return $this->parseResponse($res, $aprovacao);
+	public function addStatusModeracao($req, $res) {
+		$idComentario = $req->getAttribute("id_comentario");
+		$idUsuario = $req->getAttribute("id_usuario");
+		$status = $req->getAttribute("status");
+
+		ComentarioModeracao::updateOrCreate([
+			"id_comentario" => $idComentario,
+			"id_usuario" => $idUsuario,
+			"tipo_comentario" => $status
+		], []);
 	}
 }
