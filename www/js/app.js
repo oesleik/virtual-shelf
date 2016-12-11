@@ -16,8 +16,14 @@ var app = {
 
     onDeviceReady() {
         this.prepareEnv();
-        this.loadData();
-        this.goTo(auth.isUser() ? "home" : "login");
+
+        if (auth.isUser()) {
+            this.carregarPrateleiras();
+            this.goTo("home");
+        } else {
+            this.goTo("login");
+        }
+
         document.querySelector("app-router").init();
     },
 
@@ -32,7 +38,7 @@ var app = {
         }
     },
 
-    loadData() {
+    carregarPrateleiras() {
         api.get("/prateleiras/usuario/" + auth.getUser().id).then((prateleiras) => {
             storePrateleiras = prateleiras;
             document.querySelector("body").dispatchEvent(new CustomEvent("refreshedShelves", { detail: prateleiras }));

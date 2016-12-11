@@ -23,8 +23,8 @@
 			);
 
 			Array.from(this.querySelectorAll("button-social-login")).forEach((button) => {
-				button.addEventListener("userExists", this.userExistsCallback, false);
-				button.addEventListener("userNotExists", this.userNotExistsCallback, false);
+				button.addEventListener("userExists", this.userExistsCallback.bind(this), false);
+				button.addEventListener("userNotExists", this.userNotExistsCallback.bind(this), false);
 			});
 
 			this.refStyle = restyle({
@@ -69,10 +69,10 @@
 			var perfilSocial = event.detail.perfilSocial;
 
 			api.get("/usuarios/" + perfilSocial.id_usuario)
-				.then(function(usuario) {
+				.then((usuario) =>  {
 					auth.setUser(usuario);
-					app.goTo("home");
-				}, function() {
+					this.acessarSistema();
+				}, () => {
 					ui.alert("Ocorreu algum problema ao efetuar o login.\nPor favor, tente novamente mais tarde.");
 				});
 		}
@@ -110,27 +110,32 @@
 			};
 
 			api.add("/usuarios", usuario)
-				.then(function(response) {
+				.then((response) => {
 					usuario = response;
 					perfilSocial.id_usuario = usuario.id;
 
 					return api.add("/perfis-sociais", perfilSocial);
 				})
-				.then(function(response) {
+				.then((response) => {
 					perfilSocial = response;
 					login.id_usuario = usuario.id;
 					login.id_perfil_social = perfilSocial.id;
 
 					return api.add("/logins", login);
 				})
-				.then(function(response) {
+				.then((response) => {
 					login = response;
 					auth.setUser(usuario);
-					app.goTo("home");
+					this.acessarSistema();
 				})
-				.then(null, function() {
+				.then(null, () => {
 					ui.alert("Ocorreu algum problema ao tentar efetuar seu cadastro.\nPor favor, tente novamente mais tarde.");
 				});
+		}
+
+		acessarSistema() {
+			app.carregarPrateleiras();
+			app.goTo("home");
 		}
 
 	};
