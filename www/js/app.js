@@ -16,6 +16,7 @@ var app = {
 
     onDeviceReady() {
         this.prepareEnv();
+        this.loadData();
         this.goTo(auth.isUser() ? "home" : "login");
         document.querySelector("app-router").init();
     },
@@ -28,6 +29,13 @@ var app = {
         if (window.cordova) {
             window.open = window.cordova.InAppBrowser.open;
         }
+    },
+
+    loadData() {
+        api.get("/prateleiras/usuario/" + auth.getUser().id).then((prateleiras) => {
+            storePrateleiras = prateleiras;
+            document.querySelector("body").dispatchEvent(new CustomEvent("refreshedShelves", { detail: prateleiras }));
+        });
     },
 
     atualizarComponentes(elementos) {

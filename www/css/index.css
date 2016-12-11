@@ -48,3 +48,10 @@ body {
 .mdl-textfield-checkbox {
 	padding-top: 5px;
 }
+
+.prateleira-icon-spacer {
+	display: inline-block;
+	float: left;
+	width: 34px;
+	height: 5px;
+}

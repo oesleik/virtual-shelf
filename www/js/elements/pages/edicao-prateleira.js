@@ -45,9 +45,15 @@
 			if (this.isEdicao) {
 			} else {
 				api.add("/prateleiras/usuario/" + auth.getUser().id, prateleira).then((prateleira) => {
-					app.goTo("prateleiras/" + prateleira.id);
+					storePrateleiras.push(prateleira);
+					this.acessarPrateleira(prateleira.id);
 				});
 			}
+		}
+
+		acessarPrateleira(id) {
+			document.querySelector("body").dispatchEvent(new CustomEvent("refreshedShelves", { detail: storePrateleiras }));
+			app.goTo("prateleiras/" + id);
 		}
 
 		cancelar() {

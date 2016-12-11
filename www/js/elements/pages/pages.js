@@ -1,6 +1,8 @@
 (function(pages, innerHTML, app) {
 	"use strict";
 
+	document.querySelector("body").addEventListener("refreshedShelves", atualizarMenuLateral);
+
 	pages.PageBlank = class extends HTMLElement {
 
 		constructor(self) {
@@ -74,18 +76,32 @@
 		return `<div class="mdl-layout__drawer">
 					<span class="mdl-layout-title">Virtual Shelf</span>
 					<nav class="mdl-navigation">
-						<a class="mdl-navigation__link" href="#/pesquisar-livros">Pesquisar <i class="material-icons">search</i></a>
-						<a class="mdl-navigation__link" href="#/prateleira/{id}">Favoritos <i class="material-icons">star_border</i></a>
-						${""/*<a class="mdl-navigation__link" href="#/prateleira/{id}">Próximos <i class="material-icons">bookmark_border</i></a>*/}
-						<a class="mdl-navigation__link mdl-menu__item--full-bleed-divider" href="#/prateleiras/add">Nova prateleira <i class="material-icons">library_add</i></a>
-						<a class="mdl-navigation__link" href="#/configuracoes">Configurações <i class="material-icons">settings</i></a>
-						<a class="mdl-navigation__link" href="#" onclick="app.logout(); return false;">Sair <i class="material-icons">exit_to_app</i></a>
+						${getLayoutNavDrawer()}
 					</nav>
 				</div>`;
 	}
 
+	function getLayoutNavDrawer() {
+		return `
+			<a class="mdl-navigation__link mdl-menu__item--full-bleed-divider" href="#/pesquisar-livros">Pesquisar <i class="material-icons">search</i></a>
+			<a class="mdl-navigation__link" href="#/prateleira/{id}">Favoritos <i class="material-icons">star_border</i></a>
+			${storePrateleiras.map((prateleira) => `<a class="mdl-navigation__link" href="#/prateleiras/${prateleira.id}">${prateleira.nome} <span class="prateleira-icon-spacer"></span></a>`).join("")}
+			<a class="mdl-navigation__link mdl-menu__item--full-bleed-divider" href="#/prateleiras/add">Nova prateleira <i class="material-icons">library_add</i></a>
+			<a class="mdl-navigation__link" href="#/configuracoes">Configurações <i class="material-icons">settings</i></a>
+			<a class="mdl-navigation__link" href="#" onclick="app.logout(); return false;">Sair <i class="material-icons">exit_to_app</i></a>`;
+	}
+
 	function getLayoutContent() {
 		return `<div class="mdl-layout__content" id="page-content"></div>`;
+	}
+
+	function atualizarMenuLateral() {
+		var target = document.querySelector(".mdl-layout > .mdl-layout__drawer .mdl-navigation");
+
+		if (target) {
+			innerHTML(target, getLayoutNavDrawer());
+			app.atualizarComponentes(target);
+		}
 	}
 
 }( window.pages = {}, window.innerHTML, window.app ));
