@@ -68,8 +68,18 @@ class Volumes extends Services {
 	public function _parseVolume($volume) {
 		$related = array();
 		$related["editora"] = Editora::find($volume->id_editora);
-		$related["autores"] = VolumeAutor::where("id_volume", $volume->id)->get();
-		$related["categorias"] = VolumeCategoria::where("id_volume", $volume->id)->get();
+
+		$autores = VolumeAutor::where("id_volume", $volume->id)->get();
+		$related["autores"] = array();
+		foreach ($autores as $relacao) {
+			$related["autores"][] = Autor::find($relacao->id_autor);
+		}
+
+		$categorias = VolumeCategoria::where("id_volume", $volume->id)->get();
+		$related["categorias"] = array();
+		foreach ($categorias as $relacao) {
+			$related["categorias"][] = Categoria::find($relacao->id_categoria);
+		}
 
 		$related["imagens"] = array();
 		$imagens = VolumeImagem::where("id_volume", $volume->id)->get();
