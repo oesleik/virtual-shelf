@@ -28,6 +28,7 @@ var app = {
     prepareEnv() {
         if (window.cordova) {
             window.open = window.cordova.InAppBrowser.open;
+            api.baseUrl = "http://192.168.3.65/~oeslei.250995/virtual-shelf/public_html/api/v1";
         }
     },
 

@@ -1,6 +1,6 @@
 var api = {
 
-	baseUrl: "http://192.168.3.65/~oeslei.250995/virtual-shelf/public_html/api/v1",
+	baseUrl: "http://localhost/virtual-shelf/public_html/api/v1",
 
 	get(path) {
 		return this.request(path, "GET");
