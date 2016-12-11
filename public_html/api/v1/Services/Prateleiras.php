@@ -52,31 +52,16 @@ class Prateleiras extends Services {
 	}
 
 	public function deleteVolume($req, $res) {
+		$idPrateleira = $req->getAttribute("id_prateleira");
+		$idVolume = $req->getAttribute("id_volume");
+		$idUsuario = $req->getAttribute("id_usuario");
 
-		$dados = $this->parseRequestBody($req);
-		$dados["id_prateleira"]=$req->getAttribute("id_prateleira");
-		$dados["id_volume"]=$req->getAttribute("id_volume");
+		$prateleira = Prateleira::find($idPrateleira);
 
-		$prateleira = Prateleira::find($dados["id_prateleira"]);
-
-		if ($prateleira === null) {
-			return $this->parseResponse($res, "Prateleira não existe", self::ERROR);
+		if ($prateleira !== null && $prateleira->id_usuario == $idUsuario) {
+			PrateleiraVolume::where("id_prateleira", $idPrateleira)->where("id_volume", $idVolume)->delete();
 		} else {
-
-			if ($prateleira["id_usuario"] == $req->getAttribute("id_usuario")){
-
-				if(Volume::find($req->getAttribute("id_volume")) === null){
-					return $this->parseResponse($res, "Este volume não existe", self::ERROR);
-				}else{
-
-					$registro = PrateleiraVolume::where("id_volume", $dados["id_volume"])->where("id_prateleira", $dados["id_prateleira"])->delete();
-					return $this->parseResponse($res, $registro);
-				}
-
-			} else{
-
-				return $this->parseResponse($res, "Esta prateleira não pertence a esse usuário", self::ERROR);
-			}	
+			return $this->parseResponse($res, "Prateleira não encontrada", self::ERROR);
 		}
 	}
 
@@ -117,7 +102,7 @@ class Prateleiras extends Services {
 			$dadosVolumes = array();
 
 			foreach ($volumes as $relacao) {
-				$volume = Volume::find($relacao->id);
+				$volume = Volume::find($relacao->id_volume);
 
 				if ($volume !== null) {
 					$dadosVolumes[] = $serviceVolumes->_parseVolume($volume);

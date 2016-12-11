@@ -25,7 +25,7 @@
 			innerHTML(target, `<carregando-conteudo></carregando-conteudo>`);
 
 			api.get(`/prateleiras/${this.prateleiraId}/usuarios/${auth.getUser().id}/volumes`).then((volumes) => {
-				innerHTML(target, volumes.map((volume) => `<volume-box infoId="${data.store(volume)}"></volume-box>`).join(""));
+				innerHTML(target, volumes.map((volume) => `<volume-box infoId="${data.store(volume)}" prateleiraId="${this.prateleiraId}"></volume-box>`).join(""));
 			}, (error) => {
 				innerHTML(target, "<erro-listagem></erro-listagem>");
 			});

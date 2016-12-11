@@ -24,13 +24,17 @@
 			var filtros = utils.getFormValues("filtrosVolumes");
 			var target = this.querySelector("#resultado-busca");
 
-			innerHTML(target, `<carregando-conteudo></carregando-conteudo>`);
+			if (filtros.pesquisa.length) {
+				innerHTML(target, `<carregando-conteudo></carregando-conteudo>`);
 
-			api.get("/volumes/pesquisa/" + filtros.pesquisa).then((volumes) => {
-				innerHTML(target, volumes.map((volume) => `<volume-box infoId="${data.store(volume)}"></volume-box>`).join(""));
-			}, (error) => {
-				innerHTML(target, "<erro-listagem></erro-listagem>");
-			});
+				api.get("/volumes/pesquisa/" + filtros.pesquisa).then((volumes) => {
+					innerHTML(target, volumes.map((volume) => `<volume-box infoId="${data.store(volume)}"></volume-box>`).join(""));
+				}, (error) => {
+					innerHTML(target, "<erro-listagem></erro-listagem>");
+				});
+			} else {
+				innerHTML(target, "");
+			}
 		}
 
 	};

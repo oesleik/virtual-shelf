@@ -5,6 +5,7 @@
 
 		connectedCallback() {
 			this.volume = data.get(this.getAttribute("infoId"));
+			this.prateleiraId = this.getAttribute("prateleiraId");
 
 			if (this.volume != null) {
 				innerHTML(this, `
@@ -15,6 +16,7 @@
 						<div class="status">
 							<volume-situacao volumeId="${this.volume.id}"></volume-situacao>
 						</div>
+						${this.prateleiraId == null ? "" : `<div class="acao-remover-prateleira"><i class="material-icons">delete</i></div>`}
 						<div class="rating">
 							<volume-avaliacao volumeId="${this.volume.id}"></volume-avaliacao>
 						</div>
@@ -27,11 +29,22 @@
 				Array.from(this.querySelectorAll(".js-exibir-volume")).forEach((element) => {
 					element.addEventListener("click", this.exibirVolume.bind(this), false);
 				});
+
+				Array.from(this.querySelectorAll(".acao-remover-prateleira")).forEach((element) => {
+					element.addEventListener("click", this.removerVolume.bind(this), false);
+				});
 			}
 		}
 
 		exibirVolume() {
 			app.goTo("volume/" + this.volume.id);
+		}
+
+		removerVolume() {
+			if (confirm("Confirma a remoção do volume desta prateleira?")) {
+				api.delete(`/prateleiras/${this.prateleiraId}/usuario/${auth.getUser().id}/volume/${this.volume.id}`);
+				this.remove();
+			}
 		}
 
 	};
@@ -74,7 +87,8 @@
 		"volume-box .secondary": {
 			"position": "absolute",
 			"bottom": "3px",
-			"left": "110px"
+			"left": "110px",
+			"right": "15px"
 		},
 		"volume-box .status": {
 			"font-size": "15px",
@@ -82,6 +96,10 @@
 		},
 		"volume-box .status i": {
 			"vertical-align": "bottom"
+		},
+		"volume-box .acao-remover-prateleira": {
+			"float": "right",
+			"color": "#666"
 		}
 	}, []);
 
