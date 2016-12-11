@@ -116,4 +116,26 @@ class Prateleiras extends Services {
 			}	
 		}	
 	}
+
+	public function getVolumes($req, $res) {
+		$prateleira = Prateleira::find($req->getAttribute("id_prateleira"));
+
+		if ($prateleira != null && $prateleira->id_usuario == $req->getAttribute("id_usuario")) {
+			$volumes = PrateleiraVolume::where("id_prateleira", $req->getAttribute("id_prateleira"))->get();
+			$serviceVolumes = new Volumes();
+			$dadosVolumes = array();
+
+			foreach ($volumes as $relacao) {
+				$volume = Volume::find($relacao->id);
+
+				if ($volume !== null) {
+					$dadosVolumes[] = $serviceVolumes->_parseVolume($volume);
+				}
+			}
+
+			return $this->parseResponse($res, $dadosVolumes);
+		} else {
+			return $this->parseResponse($res, "Prateleira inválida", self::ERROR);
+		}
+	}
 }

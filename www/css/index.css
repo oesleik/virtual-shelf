@@ -55,3 +55,16 @@ body {
 	width: 34px;
 	height: 5px;
 }
+
+.mdl-layout__tab-bar {
+	height: 48px;
+}
+
+.mdl-layout__tab-bar-container .mdl-layout__tab-bar {
+	height: 96px;
+}
+
+.mdl-menu__item .material-icons {
+	vertical-align: text-bottom;
+	margin-bottom: -3px;
+}

@@ -19,47 +19,13 @@ class Volumes extends Services {
 	}
 
 	public function get($req, $res) {
-		$id = $req->getAttribute("id");
-		
-
-		$related = array();
-		$volume = Volume::find($id);
-		$related["editora"] = array();
-		$related["autores"] = array();
-		$related["categorias"] = array();
-		$related["imagens"] = array();
+		$volume = Volume::find($req->getAttribute("id"));
 
 		if ($volume === null) {
 			return $this->parseResponse($res, "Volume não encontrado", self::ERROR);
 		} else {
-			$related['editora'] = Editora::find($volume['id_editora']);
-
-			$volumeDados = VolumeAutor::where('id_volume', $volume["id"])->get();
-			
-			foreach ($volumeDados as $nome) {
-				$autor = Autor::find($nome["id_autor"]);
-				$related["autores"] []= $autor;
-			}
-
-
-			$categoriaDados = VolumeCategoria::where('id_volume', $volume["id"])->get();
-			
-
-			foreach ($categoriaDados as $dado) {
-				$categoria = Categoria::find($dado["id_categoria"]);
-				$related["categorias"][] = $categoria;
-			}
-
-			$consultaImagem = VolumeImagem::where('id_volume', [$volume["id"]])->get(); 
-
-			foreach ($consultaImagem as $dado) {
-				$imagem = VolumeImagem::find($dado['id']);
-				$related["imagens"][$imagem['tamanho']] = $imagem;
-			}
-
-
-			$volumesDados = array_merge($volume->toArray(), $related);
-			return $this->parseResponse($res, $volumesDados);
+			$dadosVolume = $this->_parseVolume($volume);
+			return $this->parseResponse($res, $dadosVolume);
 		}
 	}
 
@@ -97,6 +63,21 @@ class Volumes extends Services {
 		$id = $req->getAttribute("id");
 		$deleted = (bool) Volume::destroy($id);
 		return $this->parseResponse($res, $deleted);
+	}
+
+	public function _parseVolume($volume) {
+		$related = array();
+		$related["editora"] = Editora::find($volume->id_editora);
+		$related["autores"] = VolumeAutor::where("id_volume", $volume->id)->get();
+		$related["categorias"] = VolumeCategoria::where("id_volume", $volume->id)->get();
+
+		$related["imagens"] = array();
+		$imagens = VolumeImagem::where("id_volume", $volume->id)->get();
+		foreach ($imagens as $imagem) {
+			$related["imagens"][$imagem->tamanho] = $imagem;
+		}
+
+		return array_merge($volume->toArray(), $related);
 	}
 
 	protected function _parseVolumeGoogle($item) {

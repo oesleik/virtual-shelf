@@ -1,11 +1,10 @@
-(function(pages, customElements, innerHTML, app, history, utils, api) {
+(function(pages, customElements, innerHTML, app, history, utils, api, restyle) {
 	"use strict";
 
 	pages.PageVolume = class extends pages.PageMain {
 
 		connectedCallback() {
 			super.connectedCallback();
-			innerHTML(this.querySelector("#page-title"), `Virtual Shelf`);
 
 			innerHTML(this.querySelector("#page-tabs"), `
 				<a href="#scroll-tab-1" class="mdl-layout__tab is-active">Informações</a>
@@ -13,8 +12,8 @@
 			);
 
 			innerHTML(this.querySelector("#page-content"), `
-				<section id="scroll-tab-1" class="mdl-layout__tab-panel is-active">Carregando...</section>
-				<section id="scroll-tab-2" class="mdl-layout__tab-panel">Carregando...</section>`);
+				<section id="scroll-tab-1" class="mdl-layout__tab-panel is-active"><carregando-conteudo></carregando-conteudo></section>
+				<section id="scroll-tab-2" class="mdl-layout__tab-panel"><carregando-conteudo></carregando-conteudo></section>`);
 
 			api.get("/volumes/" + this.getAttribute("id")).then((volume) => {
 				this.volume = volume;
@@ -62,6 +61,37 @@
 				Array.from(this.querySelectorAll(".btn-alterar-situacao")).forEach((element) => {
 					element.addEventListener("click", this.alterarSituacao.bind(this, volume.id, element.getAttribute("situacao")), false);
 				});
+
+				if (storePrateleiras.length) {
+					innerHTML(this.querySelector("#page-header-actions"), `
+						<button class="mdl-navigation__link mdl-button mdl-js-button mdl-button--icon" id="menu-acoes-header">
+						  <i class="material-icons">more_vert</i>
+						</button>
+						<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="menu-acoes-header">
+							<li class="mdl-menu__item">Adicionar aos favoritos</li>
+							<li class="mdl-menu__item" id="acao-adicionar-volume-prateleira">Adicionar a prateleira</li>
+						</ul>
+
+						<dialog class="mdl-dialog" id="dialog-adicionar-prateleira">
+							<h4 class="mdl-dialog__title">Adicionar a prateleira</h4>
+							<div class="mdl-dialog__content">
+								<ul class="demo-list-item mdl-list">
+									${storePrateleiras.map((prateleira) => `<li class="mdl-list__item adicionar-volume" prateleira="${prateleira.id}"><span class="mdl-list__item-primary-content">${prateleira.nome}</span></li>`).join("")}
+								</ul>
+							</div>
+							<div class="mdl-dialog__actions">
+								<button type="button" class="mdl-button close">Cancelar</button>
+							</div>
+						</dialog>`
+					);
+
+					this.querySelector("#acao-adicionar-volume-prateleira").addEventListener("click", () => this.querySelector('#dialog-adicionar-prateleira').showModal(), false);
+					this.querySelector("#dialog-adicionar-prateleira .close").addEventListener('click', () => this.querySelector("#dialog-adicionar-prateleira").close(), false);
+
+					Array.from(this.querySelectorAll("#dialog-adicionar-prateleira .adicionar-volume")).forEach((element) => {
+						element.addEventListener('click', this.adicionarVolume.bind(this, element.getAttribute("prateleira")), false);
+					});
+				}
 
 			// 	return api.get("/comentarios/volume/" + volume.id);
 			// }).then((comentarios) => {
@@ -127,8 +157,13 @@
 			console.log(arguments);
 		}
 
+		adicionarVolume(prateleiraId) {
+			api.add(`/prateleiras/${prateleiraId}/usuarios/${auth.getUser().id}/volumes/${this.volume.id}`);
+			this.querySelector('#dialog-adicionar-prateleira').close();
+		}
+
 	};
 
 	customElements.define("page-volume", pages.PageVolume);
 
-}( window.pages, window.customElements, window.innerHTML, window.app, window.history, window.utils, window.api ));
+}( window.pages, window.customElements, window.innerHTML, window.app, window.history, window.utils, window.api, window.restyle ));

@@ -69,6 +69,8 @@
 	function getLayoutHeader() {
 		return `<div class="mdl-layout__header-row">
 					<span class="mdl-layout-title" id="page-title">Virtual Shelf</span>
+					<div class="mdl-layout-spacer"></div>
+					<nav class="mdl-navigation" id="page-header-actions"></nav>
 				</div>`;
 	}
 
@@ -92,7 +94,9 @@
 	}
 
 	function getLayoutContent() {
-		return `<div class="mdl-layout__content" id="page-content"></div>`;
+		return `<div class="mdl-layout__content" id="page-content">
+					<carregando-conteudo></carregando-conteudo>
+				</div>`;
 	}
 
 	function atualizarMenuLateral() {

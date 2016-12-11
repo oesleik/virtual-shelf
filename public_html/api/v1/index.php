@@ -40,7 +40,8 @@ $app->post("/perfis-sociais", "Services\PerfisSociais:add");
 $app->get("/prateleiras/usuario/{id_usuario:\d+}", "Services\Prateleiras:getAll");
 $app->get("/prateleiras/{id:\d+}/usuario/{id_usuario:\d+}", "Services\Prateleiras:get");
 $app->post("/prateleiras/usuario/{id_usuario:\d+}", "Services\Prateleiras:add");
-$app->post("/prateleiras/{id_prateleira:\d+}/usuario/{id_usuario:\d+}/volume/{id_volume:\d+}", "Services\Prateleiras:addVolume");
+$app->get("/prateleiras/{id_prateleira:\d+}/usuarios/{id_usuario:\d+}/volumes", "Services\Prateleiras:getVolumes");
+$app->post("/prateleiras/{id_prateleira:\d+}/usuarios/{id_usuario:\d+}/volumes/{id_volume:\d+}", "Services\Prateleiras:addVolume");
 $app->delete("/prateleiras/{id_prateleira:\d+}/usuario/{id_usuario:\d+}/volume/{id_volume:\d+}", "Services\Prateleiras:deleteVolume");
 $app->delete("/prateleiras/{id_prateleira:\d+}/usuario/{id_usuario:\d+}", "Services\Prateleiras:delete");
 
