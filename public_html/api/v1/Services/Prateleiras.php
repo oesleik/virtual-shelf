@@ -9,16 +9,17 @@ use Models\Volume;
 class Prateleiras extends Services {
 
 	public function getAll($req, $res) {
-		$prateleiras = Prateleira::all();
+		$prateleiras = Prateleira::where("id_usuario", $req->getAttribute("id_usuario"))->get();
 		return $this->parseResponse($res, $prateleiras);
 	}
 
 	public function get($req, $res) {
 		$id = $req->getAttribute("id");
+		$idUsuario = $req->getAttribute("id_usuario");
 		$prateleira = Prateleira::find($id);
 
-		if ($prateleira === null) {
-			return $this->parseResponse($res, "Prateleira inválido", self::ERROR);
+		if ($prateleira === null || $prateleira->id_usuario != $idUsuario) {
+			return $this->parseResponse($res, "Prateleira não encontrada", self::ERROR);
 		} else {
 			return $this->parseResponse($res, $prateleira);
 		}
