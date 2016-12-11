@@ -68,3 +68,7 @@ body {
 	vertical-align: text-bottom;
 	margin-bottom: -3px;
 }
+
+.hide {
+	display: none;
+}

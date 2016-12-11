@@ -3,65 +3,64 @@
 namespace Services;
 
 use Models\VolumeComentario;
+use Models\Usuario;
+use Models\ComentarioAprovacao;
 
 class VolumeComentarios extends Services {
 
 	public function getAll($req, $res) {
-		$id = $req->getAttribute("id_volume");
-		$volumesComentarios = VolumeComentario::where('id_volume', $id)->get();
-		return $this->parseResponse($res, $volumesComentarios);
+		$idVolume = $req->getAttribute("id_volume");
+		$comentarios = VolumeComentario::where('id_volume', $idVolume)->get();
+
+		foreach ($comentarios as $idx => $comentario) {
+			$comentarios[$idx]["usuario"] = Usuario::find($comentario->id_usuario);
+			$comentarios[$idx]["aprovacoes"] = count(ComentarioAprovacao::where("id_comentario", $comentario->id)->get());
+		}
+
+		return $this->parseResponse($res, $comentarios);
 	}
 
 	public function get($req, $res) {
-		$id = $req->getAttribute("id");
-		$volumeComentario = VolumeComentario::find($id);
+		$comentario = VolumeComentario::find($req->getAttribute("id_comentario"));
 
-		if ($volumeComentario === null) {
-			return $this->parseResponse($res, "Comentário de volume não encontrado", self::ERROR);
+		if ($comentario === null) {
+			return $this->parseResponse($res, "Comentário não encontrado", self::ERROR);
 		} else {
-			return $this->parseResponse($res, $volumeComentario);
+			return $this->parseResponse($res, $comentario);
 		}
 	}
 
 	public function add($req, $res) {
-		$id_volume = $req->getAttribute("id_volume");
-		$id_usuario = $req->getAttribute("id_usuario");
 		$dados = $this->parseRequestBody($req);
-		$dados["id_volume"]=$id_volume;
-		$dados["id_usuario"]=$id_usuario;
-
-		$volumeComentario = VolumeComentario::Create($dados);
-		return $this->parseResponse($res, $volumeComentario);
+		$dados["id_volume"] = $req->getAttribute("id_volume");
+		$dados["id_usuario"] = $req->getAttribute("id_usuario");
+		$comentario = VolumeComentario::create($dados);
+		return $this->parseResponse($res, $comentario);
 	}
 
 	public function edit($req, $res) {
-		$id_comentario = $req->getAttribute("id_comentario");
-		$id_usuario = $req->getAttribute("id_usuario");
 		$dados = $this->parseRequestBody($req);
-		$comentario = VolumeComentario::find($id_comentario);
-		
-		if($comentario['id_usuario'] == $id_usuario){
-			VolumeComentario::where("id", $id_comentario)->update($dados);
-			$comentarioAtualizado = VolumeComentario::find($id_comentario);
-			return $this->parseResponse($res, $comentarioAtualizado);
-		}
-		else{
-			return $this->parseResponse($res, "Comentário de volume não atualizado", self::ERROR);
-		}
+		$idComentario = $req->getAttribute("id_comentario");
+		$idUsuario = $req->getAttribute("id_usuario");
+		$comentario = VolumeComentario::find($idComentario);
 
+		if ($comentario['id_usuario'] == $idUsuario) {
+			VolumeComentario::where("id", $idComentario)->update($dados);
+			$comentario = VolumeComentario::find($idComentario);
+			return $this->parseResponse($res, $comentario);
+		} else {
+			return $this->parseResponse($res, "Comentário não encontrado", self::ERROR);
+		}
 	}
 
 	public function delete($req, $res) {
-		$id_comentario = $req->getAttribute("id_comentario");
-		$id_usuario = $req->getAttribute("id_usuario");
+		$idComentario = $req->getAttribute("id_comentario");
+		$idUsuario = $req->getAttribute("id_usuario");
+		$comentario = VolumeComentario::find($idComentario);
 
-		$comentario = VolumeComentario::find($id_comentario);
-
-		if($comentario['id_usuario'] == $id_usuario){
-			$deleted = (bool) VolumeComentario::destroy($id_comentario);
-			return $this->parseResponse($res, $deleted);
-		}
-		else{
+		if ($comentario['id_usuario'] == $idUsuario) {
+			VolumeComentario::destroy($idComentario);
+		} else {
 			return $this->parseResponse($res, "Comentário não é deste usuário", self::ERROR);
 		}
 	}
