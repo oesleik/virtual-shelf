@@ -34,6 +34,7 @@ class Volumes extends Services {
 
 		$parametros = array();
 		$parametros['maxResults']="30";
+		$parametros['langRestrict']="pt";
 
 		$service = \Utils\getGoogleBooksService();
 
