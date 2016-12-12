@@ -32,8 +32,12 @@ class Volumes extends Services {
 	public function getPesquisa($req, $res) {
 		$pesquisa = $req->getAttribute("pesquisa");
 
+		$parametros = array();
+		$parametros['maxResults']="30";
+
 		$service = \Utils\getGoogleBooksService();
-		$response = $service->volumes->listVolumes($pesquisa);
+
+		$response = $service->volumes->listVolumes($pesquisa, $parametros);
 
 		$volumes = array();
 		foreach ($response as $item) {
