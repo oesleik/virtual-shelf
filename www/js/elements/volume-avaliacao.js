@@ -19,7 +19,8 @@
 				});
 		}
 
-		exibirEstrelas(avaliacao = 0) {
+		exibirEstrelas(avaliacao) {
+			avaliacao = avaliacao > 0 ? avaliacao : 0;
 			var html = "";
 
 			for (var i = 1; i <= 5; i++) {

@@ -22,7 +22,8 @@
 				});
 		}
 
-		exibirSituacoes(situacao = "") {
+		exibirSituacoes(situacao) {
+			situacao = typeof situacao === "string" ? situacao : "";
 			situacao = opcoes.indexOf(situacao) >= 0 ? situacao : opcoes[0];
 			uid++;
 

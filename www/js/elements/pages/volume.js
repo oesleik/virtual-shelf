@@ -259,7 +259,10 @@
 				});
 		}
 
-		exibirFormComentario(idComentario = 0, idComentarioPai = 0) {
+		exibirFormComentario(idComentario, idComentarioPai) {
+			idComentario = idComentario > 0 ? idComentario : 0;
+			idComentarioPai = idComentarioPai > 0 ? idComentarioPai : 0;
+
 			this.querySelector("#espaco-exibicao-comentarios").classList.add("hide");
 
 			innerHTML(this.querySelector("#espaco-form-comentario"), `
@@ -309,7 +312,9 @@
 			this.querySelector("#btn-cancelar-comentario").addEventListener("click", this.ocultarFormComentario.bind(this, true), false);
 		}
 
-		ocultarFormComentario(attComponentes = true) {
+		ocultarFormComentario(attComponentes) {
+			attComponentes = typeof attComponentes === "boolean" ? attComponentes : true;
+
 			innerHTML(this.querySelector("#espaco-form-comentario"), "");
 			this.querySelector("#espaco-exibicao-comentarios").classList.remove("hide");
 
