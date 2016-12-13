@@ -1,11 +1,15 @@
 (function(pages, customElements, innerHTML, app, history, utils, auth, api) {
 	"use strict";
 
-	pages.PagePrateleira = class extends pages.PageDefault {
+	pages.PagePrateleiraPublica = class extends pages.PageDefault {
 
 		connectedCallback() {
 			super.connectedCallback();
+			console.log("Jkfjdk");
+			var dataId = this.getAttribute("id");
+			var dados = data.get(dataId);
 			this.prateleiraId = this.getAttribute("id");
+			this.usuarioId = this.getAttribute("usuarioId");
 
 			api.get(`/prateleiras/${this.prateleiraId}/usuario/${auth.getUser().id}`).then((prateleira) => {
 				var target = this.querySelector("#page-content");
@@ -35,7 +39,7 @@
 
 				app.atualizarComponentes(this);
 			}, () => {
-				app.goTo("home");
+				// app.goTo("home");
 			});
 		}
 
@@ -59,6 +63,6 @@
 
 	};
 
-	customElements.define("page-prateleira", pages.PagePrateleira);
+	customElements.define("page-prateleira-publica", pages.PagePrateleiraPublica);
 
 }( window.pages, window.customElements, window.innerHTML, window.app, window.history, window.utils, window.auth, window.api ));

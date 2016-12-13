@@ -3,6 +3,7 @@
 namespace Services;
 
 use Models\Usuario;
+use Models\PerfilSocial;
 
 class Usuarios extends Services {
 
@@ -18,6 +19,8 @@ class Usuarios extends Services {
 		if ($usuario === null) {
 			return $this->parseResponse($res, "Usuário não encontrado", self::ERROR);
 		} else {
+			$redesSociais = PerfilSocial::where("id_usuario", $id)->get();
+			$usuario["redes_sociais"] = $redesSociais;
 			return $this->parseResponse($res, $usuario);
 		}
 	}

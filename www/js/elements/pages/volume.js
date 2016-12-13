@@ -66,7 +66,7 @@
 						  <i class="material-icons">more_vert</i>
 						</button>
 						<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="menu-acoes-header">
-							<li class="mdl-menu__item">Adicionar aos favoritos</li>
+							${""/*<li class="mdl-menu__item">Adicionar aos favoritos</li>*/}
 							<li class="mdl-menu__item" id="acao-adicionar-volume-prateleira">Adicionar a prateleira</li>
 						</ul>
 
@@ -193,15 +193,16 @@
 					}];
 
 					var lista = comentarios.map((response) => {
-						var acoes = `<br /><a href="#" onclick="return false;" class="acao-responder-comentario" comentarioId="${response.id}">Responder</a>`;
+						// var acoes = `<br /><a href="#" onclick="return false;" class="acao-responder-comentario" comentarioId="${response.id}">Responder</a>`;
+						var acoes = `<br />`;
 
 						if (response.id_usuario == auth.getUser().id) {
 							acoes += `
-								- <a href="#" onclick="return false;" class="acao-editar-comentario" comentarioId="${response.id}">Editar</a>
+								<a href="#" onclick="return false;" class="acao-editar-comentario" comentarioId="${response.id}">Editar</a>
 								- <a href="#" onclick="return false;" class="acao-excluir-comentario" comentarioId="${response.id}">Excluir</a>`;
 						} else {
 							acoes += `
-								- <a href="#" onclick="return false;" id="menu-reportar-comentario-${response.id}">Reportar</a>
+								<a href="#" onclick="return false;" id="menu-reportar-comentario-${response.id}">Reportar</a>
 								<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="menu-reportar-comentario-${response.id}">
 									${tiposReport.map((tipo) => `<li class="mdl-menu__item acao-reportar-comentario" comentarioId="${response.id}" tipoReport="${tipo.ref}">${tipo.descricao}</li>`).join("")}
 								</ul>`;
@@ -209,7 +210,7 @@
 
 						return `<li class="mdl-list__item mdl-list__item--three-line">
 									<span class="mdl-list__item-primary-content">
-										<span>${utils.escapeHtml(response.usuario.apelido)}</span>
+										<span class="acao-visualizar-usuario" usuarioId="${response.usuario.id}">${utils.escapeHtml(response.usuario.apelido)}</span>
 										<span class="mdl-list__item-text-body">
 											${utils.escapeHtml(response.comentario)}
 											${acoes}
@@ -250,6 +251,10 @@
 
 					Array.from(this.querySelectorAll(".acao-reportar-comentario")).forEach((element) => {
 						element.addEventListener("click", this.reportarComentario.bind(this, element.getAttribute("comentarioId"), element.getAttribute("tipoReport")), false);
+					});
+
+					Array.from(this.querySelectorAll(".acao-visualizar-usuario")).forEach((element) => {
+						element.addEventListener("click", this.visualizarUsuario.bind(this, element.getAttribute("usuarioId")), false);
 					});
 				});
 		}
@@ -337,6 +342,10 @@
 
 		reportarComentario(comentarioId, tipoReport) {
 			api.edit(`/comentarios/${comentarioId}/usuario/${auth.getUser().id}/moderacao/${tipoReport}`);
+		}
+
+		visualizarUsuario(usuarioId) {
+			app.goTo(`usuarios/${usuarioId}`);
 		}
 
 	};
