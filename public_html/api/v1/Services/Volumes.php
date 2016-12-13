@@ -33,18 +33,14 @@ class Volumes extends Services {
 		$pesquisa = $req->getAttribute("pesquisa");
 
 		$parametros = array();
-		$parametros['maxResults']="30";
-		$parametros['langRestrict']="pt";
-		
-		// incluindo essa linha filtra a pesquisa pelo nome do livro e pela categoria. No lugar do "Computers" seria a variável
-		//$pesquisa = $pesquisa."+subject:Computers";
+		$parametros['maxResults'] = 30;
+		$parametros['langRestrict'] = "pt";
 
-		//com essa outra, faz a pesquisa somente pela categoria. Só tem que comentar a primeira linha desse método. No lugar do "Computers" seria a variável.
-		//$pesquisa = "subject:Computers";
-		
+		if (isset($_REQUEST["categoria"])) {
+			$pesquisa .= "+subject:" . $_REQUEST["categoria"];
+		}
 
 		$service = \Utils\getGoogleBooksService();
-
 		$response = $service->volumes->listVolumes($pesquisa, $parametros);
 
 		$volumes = array();
