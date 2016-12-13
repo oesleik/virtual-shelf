@@ -58,4 +58,7 @@ $app->put("/comentarios/{id_comentario:\d+}/usuario/{id_usuario:\d+}/moderacao/{
 $app->delete("/comentarios/{id_comentario:\d+}/usuario/{id_usuario:\d+}/moderacao/{status}", "Services\VolumeComentarios:deleteStatusModeracao");
 
 
+// categorias
+$app->get("/categorias", "Services\Categorias:getAll");
+
 $app->run();
