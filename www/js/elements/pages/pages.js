@@ -85,7 +85,7 @@
 
 	function getLayoutNavDrawer() {
 		return `
-			<a class="mdl-navigation__link mdl-menu__item--full-bleed-divider" href="#/pesquisar-livros">Pesquisar <i class="material-icons">search</i></a>
+			<a class="mdl-navigation__link mdl-menu__item--full-bleed-divider" href="#/pesquisar-livros">Home <i class="material-icons">home</i></a>
 			${""/*<a class="mdl-navigation__link" href="#/prateleira/{id}">Favoritos <i class="material-icons">star_border</i></a>*/}
 			${storePrateleiras.map((prateleira) => `<a class="mdl-navigation__link" href="#/prateleiras/${prateleira.id}">${prateleira.nome} <span class="prateleira-icon-spacer"></span></a>`).join("")}
 			<a class="mdl-navigation__link mdl-menu__item--full-bleed-divider" href="#/prateleiras/add">Nova prateleira <i class="material-icons">library_add</i></a>

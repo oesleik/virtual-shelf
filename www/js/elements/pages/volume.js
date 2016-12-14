@@ -52,13 +52,22 @@
 								</div>`
 							).join("")}
 						</div>
+						<div class="advanced-info">
+							<span class="legend">Número de páginas</span>
+							<span class="info">${volume.paginas}</span>
+
+							<span class="legend">Data de publicação</span>
+							<span class="info">${utils.date2Brz(new Date(volume.dataPublicacao))}</span>
+
+							<span class="legend">Editora</span>
+							<span class="info">${volume.editora.nome}</span>
+
+							<span class="legend">Categorias</span>
+							<span class="info">${volume.categorias.map((categoria) => categoria.nome).join(", ")}</span>
+						</div>
 					</div>`);
 
 				app.atualizarComponentes(this);
-
-				Array.from(this.querySelectorAll(".btn-alterar-situacao")).forEach((element) => {
-					element.addEventListener("click", this.alterarSituacao.bind(this, volume.id, element.getAttribute("situacao")), false);
-				});
 
 				if (storePrateleiras.length) {
 					innerHTML(this.querySelector("#page-header-actions"), `
@@ -115,13 +124,13 @@
 				"#informacoes h4": {
 					"display": "block",
 					"padding": "0",
-					"margin": "0 0 15px",
+					"margin": "0 0 20px",
 					"font-size": "18px",
 					"line-height": "18px",
 					"color": "#999"
 				},
 				"#informacoes .rating": {
-					"margin-top": "5px"
+					"margin": "5px 0 30px"
 				},
 				"#informacoes .shop": {
 					"margin": "30px 0 0",
@@ -154,6 +163,19 @@
 				},
 				"#comentarios .acao-avaliar-comentario:not(.avaliacao-positiva) i": {
 					"color": "#999"
+				},
+				".advanced-info": {
+					"margin": "40px 0 0"
+				},
+				".advanced-info .legend": {
+					"font-weight": "bold"
+				},
+				".advanced-info .legend:after": {
+					"content": `":"`
+				},
+				".advanced-info .info:after": {
+					"content": `""`,
+					"display": "block"
 				}
 			}, []);
 		}
@@ -164,10 +186,6 @@
 
 		voltar() {
 			history.back();
-		}
-
-		alterarSituacao(idVolume, situacao) {
-			console.log(arguments);
 		}
 
 		adicionarVolume(prateleiraId) {
