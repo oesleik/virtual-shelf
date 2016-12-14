@@ -14,7 +14,12 @@ use Models\VolumeUsuario;
 class Volumes extends Services {
 
 	public function getAll($req, $res) {
-		$volumes = Volume::all();
+		$volumes = Volume::take(30)->get();
+
+		foreach ($volumes as $idx => $volume) {
+			$volumes[$idx] = $this->_parseVolume($volume);
+		}
+
 		return $this->parseResponse($res, $volumes);
 	}
 

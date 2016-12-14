@@ -38,8 +38,7 @@
 					${categorias.map((categoria) => `<option value="${categoria.nome}">${categoria.nome}</option>`).join("")}`);
 			});
 
-			app.atualizarComponentes(this);
-
+			this.exibirVolumes();
 			this.querySelector("#acao-toggle-filtros").addEventListener("click", this.toggleFiltros.bind(this), false);
 			this.querySelector("#acao-buscar-volumes").addEventListener("click", this.listarVolumes.bind(this), false);
 		}
@@ -64,6 +63,18 @@
 			} else {
 				innerHTML(target, "");
 			}
+		}
+
+		exibirVolumes(volumes) {
+			var target = this.querySelector("#resultado-busca");
+
+			api.get("/volumes").then((volumes) => {
+				innerHTML(target, volumes.map((volume) => `<volume-box infoId="${data.store(volume)}"></volume-box>`).join(""));
+			}, (error) => {
+				innerHTML(target, "<erro-listagem></erro-listagem>");
+			});
+
+			app.atualizarComponentes(this);
 		}
 
 	};
