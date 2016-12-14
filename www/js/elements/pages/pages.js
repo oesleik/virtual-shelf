@@ -27,7 +27,7 @@
 
 		connectedCallback() {
 			innerHTML(this, `
-				<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+				<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-layout--fixed-tabs">
 					<div class="mdl-layout__header">
 						${getLayoutHeader()}
 						<div class="mdl-layout__tab-bar mdl-js-ripple-effect" id="page-tabs"></div>

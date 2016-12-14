@@ -16,7 +16,7 @@
 						<div class="status">
 							<volume-situacao volumeId="${this.volume.id}"></volume-situacao>
 						</div>
-						${this.prateleiraId == null ? "" : `<div class="acao-remover-prateleira"><i class="material-icons">delete</i></div>`}
+						${this.prateleiraId > 0 ? `<div class="acao-remover-prateleira"><i class="material-icons">delete</i></div>` : ""}
 						<div class="rating">
 							<volume-avaliacao volumeId="${this.volume.id}"></volume-avaliacao>
 						</div>

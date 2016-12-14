@@ -142,8 +142,7 @@
 		}
 
 		exibirPrateleira(prateleiraId) {
-			var dataId = data.store({ prateleiraId: prateleiraId, usuarioId: this.usuarioId });
-			app.goTo(`prateleiras/publica/${dataId}`);
+			app.goTo(`prateleiras/${prateleiraId}/usuario/${this.usuarioId}`);
 		}
 
 	};

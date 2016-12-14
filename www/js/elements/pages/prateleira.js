@@ -6,32 +6,36 @@
 		connectedCallback() {
 			super.connectedCallback();
 			this.prateleiraId = this.getAttribute("id");
+			this.usuarioId = this.getAttribute("usuarioId") || auth.getUser().id;
+			this.isPublicUser = this.usuarioId != auth.getUser().id;
 
-			api.get(`/prateleiras/${this.prateleiraId}/usuario/${auth.getUser().id}`).then((prateleira) => {
+			api.get(`/prateleiras/${this.prateleiraId}/usuario/${this.usuarioId}`).then((prateleira) => {
 				var target = this.querySelector("#page-content");
 				this.prateleira = prateleira;
 
 				innerHTML(this.querySelector("#page-title"), utils.escapeHtml(this.prateleira.nome));
 				innerHTML(target, `<carregando-conteudo></carregando-conteudo>`);
 
-				api.get(`/prateleiras/${this.prateleiraId}/usuarios/${auth.getUser().id}/volumes`).then((volumes) => {
-					innerHTML(target, volumes.map((volume) => `<volume-box infoId="${data.store(volume)}" prateleiraId="${this.prateleiraId}"></volume-box>`).join(""));
+				api.get(`/prateleiras/${this.prateleiraId}/usuarios/${this.usuarioId}/volumes`).then((volumes) => {
+					innerHTML(target, volumes.map((volume) => `<volume-box infoId="${data.store(volume)}" prateleiraId="${this.isPublicUser ? 0 : this.prateleiraId}"></volume-box>`).join(""));
 				}, (error) => {
 					innerHTML(target, "<erro-listagem></erro-listagem>");
 				});
 
-				innerHTML(this.querySelector("#page-header-actions"), `
-					<button class="mdl-navigation__link mdl-button mdl-js-button mdl-button--icon" id="menu-acoes-header">
-					  <i class="material-icons">more_vert</i>
-					</button>
-					<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="menu-acoes-header">
-						<li class="mdl-menu__item" id="acao-editar">Editar</li>
-						<li class="mdl-menu__item" id="acao-remover">Remover</li>
-					</ul>`
-				);
+				if (!this.isPublicUser) {
+					innerHTML(this.querySelector("#page-header-actions"), `
+						<button class="mdl-navigation__link mdl-button mdl-js-button mdl-button--icon" id="menu-acoes-header">
+						  <i class="material-icons">more_vert</i>
+						</button>
+						<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="menu-acoes-header">
+							<li class="mdl-menu__item" id="acao-editar">Editar</li>
+							<li class="mdl-menu__item" id="acao-remover">Remover</li>
+						</ul>`
+					);
 
-				this.querySelector("#acao-editar").addEventListener("click", this.editar.bind(this), false);
-				this.querySelector("#acao-remover").addEventListener('click', this.remover.bind(this), false);
+					this.querySelector("#acao-editar").addEventListener("click", this.editar.bind(this), false);
+					this.querySelector("#acao-remover").addEventListener('click', this.remover.bind(this), false);
+				}
 
 				app.atualizarComponentes(this);
 			}, () => {
